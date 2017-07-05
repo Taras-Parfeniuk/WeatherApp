@@ -6,9 +6,9 @@ namespace Domain.Entities.Weather
 {
     public class Precipitation
     {
-        public int LastHoursValue { get; set; }
+        public int? LastHoursValue { get; set; }
 
-        public Precipitation(int value)
+        public Precipitation(int? value)
         {
             LastHoursValue = value;
         }

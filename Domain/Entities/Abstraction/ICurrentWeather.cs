@@ -20,7 +20,7 @@ namespace Domain.Entities.Abstraction
         DefaultTemperature Temperature { get; set; }
         Measurements MainMeathurements { get; set; }
         Wind Wind { get; set; }
-        double Cloudiness { get; set; }
+        double? Cloudiness { get; set; }
         DateTime MeathurementsTime { get; set; }
         DateTime ForecastTime { get; set; }
     }

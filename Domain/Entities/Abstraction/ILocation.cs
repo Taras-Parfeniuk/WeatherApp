@@ -4,7 +4,7 @@ namespace Domain.Entities.Abstraction
 {
     public interface ILocation
     {
-        int Id { get; set; }
+        int? Id { get; set; }
         Coordinates Coordinates { get; set; }
     }
 }

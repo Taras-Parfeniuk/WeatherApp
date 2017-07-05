@@ -6,6 +6,6 @@ namespace Domain.Entities.Temperature
 {
     public class HourlyTemperature : DefaultTemperature
     {
-        public double CurrentTemperature { get; set; }
+        public double? CurrentTemperature { get; set; }
     }
 }

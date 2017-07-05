@@ -44,19 +44,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstraction\IForecastConverter.cs" />
-    <Compile Include="Concrete\IWeatherService.cs" />
+    <Compile Include="Abstraction\IWeatherService.cs" />
     <Compile Include="Concrete\OpenWeatherService.cs" />
     <Compile Include="Concrete\OpenWeatherForecastConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{e2218da2-6129-4f75-80ca-333a964abbc5}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

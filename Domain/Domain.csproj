@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E2218DA2-6129-4F75-80CA-333A964ABBC5}</ProjectGuid>
+    <ProjectGuid>{3D6208BB-FFFC-43F6-8E1E-7C488C101974}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Domain</RootNamespace>
@@ -43,8 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\CityRepository.cs" />
-    <Compile Include="Data\ICityRepository.cs" />
     <Compile Include="Entities\Abstraction\ICurrentWeather.cs" />
     <Compile Include="Entities\Abstraction\IForecast.cs" />
     <Compile Include="Entities\Abstraction\ILocation.cs" />
@@ -68,9 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

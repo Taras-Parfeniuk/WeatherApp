@@ -14,7 +14,7 @@ namespace Domain.Entities.Forecast
         public DefaultTemperature Temperature { get; set; }
         public Measurements MainMeathurements { get; set; }
         public Wind Wind { get; set; }
-        public double Cloudiness { get; set; }
+        public double? Cloudiness { get; set; }
         public DateTime MeathurementsTime { get; set; }
         public DateTime ForecastTime { get; set; }
     }
