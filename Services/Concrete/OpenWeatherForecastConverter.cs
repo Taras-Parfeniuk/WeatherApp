@@ -13,7 +13,7 @@ using Domain.Entities.Location;
 using Domain.Entities.Weather;
 using Domain.Entities.Temperature;
 
-namespace Services
+namespace Services.Concrete
 {
     public class OpenWeatherForecastConverter : IForecastConverter
     {

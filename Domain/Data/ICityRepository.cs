@@ -9,5 +9,7 @@ namespace Domain.Data
     public interface ICityRepository
     {
         IEnumerable<City> Cities { get; }
+
+        City GetCityByName(string name);
     }
 }
