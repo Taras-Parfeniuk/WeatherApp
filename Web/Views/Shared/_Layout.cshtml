@@ -65,11 +65,51 @@
 		</div>
 		<!-- /.container -->
 	</nav>
-
-	<!-- Page Content -->
-	@RenderBody()
-	<!-- /.container -->
-	<!-- jQuery Version 1.11.1 -->
+	<div class="container">
+				<!--City search-->
+				<div class="row">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="text-center list-inline panel-default">
+								<!--список міст можна зробити з топу запитів-->
+								<div class="col-lg-3">
+									@Html.ActionLink("Kyiv", "Weather", "Forecast", new { city = "Kyiv" })
+								</div>
+								<div class="col-lg-3">
+									@Html.ActionLink("Lviv", "Weather", "Forecast", new { city = "Lviv" })
+								</div>
+								<div class="col-lg-3">
+									@Html.ActionLink("London", "Weather", "Forecast", new { city = "London" })
+								</div>
+								<div class="col-lg-3">
+									@Html.ActionLink("Paris", "Weather", "Forecast", new { city = "Paris" })
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					@using (Html.BeginForm("Weather", "Forecast"))
+					{
+						<div class="row">
+							<div class="col-lg-3 col-lg-offset-4">
+								<div class="input-group">
+									<input name="city" type="text" class="form-control" placeholder="Find your city...">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button">Go!</button>
+									</span>
+								</div>
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+		<!-- Page Content -->
+		<div class="row main-content">
+			@RenderBody()
+		</div>
+		<!-- /.container -->
+		<!-- jQuery Version 1.11.1 -->
 	<script src="~/js/jquery.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->

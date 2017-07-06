@@ -11,20 +11,43 @@ namespace Web.Controllers
 {
     public class ForecastController : Controller
     {
-        public IActionResult Hourly()
+        public IActionResult Hourly(string city)
         {
-            return View();
+            IWeatherService weatherService = new OpenWeatherService(city);
+            try
+            {
+                return View(weatherService.MediumForecast);
+            }
+            catch(Exception ex)
+            {
+                return View("Error");
+            }
         }
 
-        public IActionResult Daily()
+        public IActionResult Daily(string city)
         {
-            return View();
+            IWeatherService weatherService = new OpenWeatherService(city);
+            try
+            { 
+                return View(weatherService.LongForecast);
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
         }
 
         public IActionResult Weather(string city)
         {
             IWeatherService weatherService = new OpenWeatherService(city);
-            return View(weatherService.CurrentWeather);
+            try
+            { 
+                return View(weatherService.CurrentWeather);
+            }
+            catch (Exception ex)
+            {
+                return View("Error");
+            }
         }
     }
 }

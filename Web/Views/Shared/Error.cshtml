@@ -1,14 +1,27 @@
 ﻿@{
     ViewData["Title"] = "Error";
 }
-
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
-</p>
+<div class="col-lg-offset-3 col-lg-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2 class="panel-title text-danger">Error </h2>
+			<h3>An error occurred while processing your request.</h3>
+		</div>
+		<div class="panel-body">
+			<div class="container text-center">
+				<div class="row">
+					<div class="col-lg-9">
+					<h3>Development Mode</h3>
+					<p>
+						Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+					</p>
+					<p>
+						<strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
+					</p>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>

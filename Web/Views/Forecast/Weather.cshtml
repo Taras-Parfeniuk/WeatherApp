@@ -1,10 +1,70 @@
 
 @model Domain.Entities.Abstraction.ICurrentWeather
 @{
-    ViewData["Title"] = "Weather";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = $"Current Weather in {Model.City.Name}";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Weather</h2>
-<h3>@Model.Cloudiness</h3>
-
+		<div class="col-lg-offset-3 col-lg-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">@Model.City.Name, @Model.ForecastTime.ToShortDateString()</h3>
+				</div>
+				<div class="panel-body">
+					<div class="container text-center">
+						<div class="row">
+							<div class="col-lg-4">
+								@{ 
+									var weatherIco = $"/images/icon/{Model.Weather.Icon}.svg";
+								}
+								<img src=@weatherIco />
+							</div>
+							<div class="col-lg-3">
+								<div class="row">
+									<h4>@Model.Weather.Main, @Model.Temperature.Min C- @Model.Temperature.Max C</h4>
+								</div>
+								<div class="row">
+									<p>@Model.Weather.Description</p>
+								</div>
+							</div>
+							
+						</div>
+						<div class="row">
+							<hr/>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<img src="~/images/icon/icon-1.svg" />
+							</div>
+							<div class="col-lg-3">
+								<div class="row">
+									<h5>Sunrise at @Model.Sunrise.TimeOfDay</h5>
+								</div>
+								<div class="row">
+									<h5>Sunset at @Model.Sunset.TimeOfDay</h5>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<hr />
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<img src="~/images/icon/icon-7.svg" />
+							</div>
+							<div class="col-lg-3">
+								<div class="row">
+									<h5>Wind Speed: @Model.Wind.Speed</h5>
+								</div>
+								<div class="row">
+									<h5>Humidity: @Model.MainMeathurements.Humidity</h5>
+								</div>
+								<div class="row">
+									<h5>Pressure: @Model.MainMeathurements.DefaultPressure</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
