@@ -3,7 +3,6 @@ using System.Net;
 using System.IO;
 
 using Domain.Entities.Abstraction;
-using Domain.Entities.Location;
 using Services.Abstraction;
 
 namespace Services.Concrete
@@ -83,7 +82,7 @@ namespace Services.Concrete
         public OpenWeatherService(string cityName)
         {
             _city = cityName;
-            _longForecastLenght = 5;
+            _longForecastLenght = 7;
             _responseConverter = new OpenWeatherForecastConverter();
         }
 

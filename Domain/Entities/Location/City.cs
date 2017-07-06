@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Domain.Entities.Abstraction;
+﻿using Domain.Entities.Abstraction;
 
 namespace Domain.Entities.Location
 {

@@ -22,37 +22,67 @@
 					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name })
 				</div>
 				<div class="col-lg-4">
-					@Html.ActionLink("Five days", "Daily", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name })
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="row text-center">
+<div class="row">
 	<div class="col-lg-12">
 
-		@{
-			foreach (var d in Model.DayForecasts)
-			{
-				var weatherIco = $"/images/icon/{d.Weather.Icon}.svg";
+	@{
+		foreach (var d in Model.DayForecasts)
+		{
+			var weatherIco = $"/images/icon/{d.Weather.Icon}.svg";
+			var temperature = (DailyTemperature)d.Temperature;
 
-				<div class="row">
-					<hr />
-					<div class="col-lg-3">
-						<h3>@d.ForecastTime.DayOfWeek</h3>
-						<p>@d.ForecastTime.ToShortDateString()</p>
+			<div class="container">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3>
+							@d.ForecastTime.ToLongDateString()
+						</h3>
+						<div class="container">
+							<div class="row">
+								<img src=@weatherIco />
+								@d.Weather.Description
+							</div>
+						</div>
 					</div>
-					<div class="col-lg-3">
-						<img src=@weatherIco />
-					</div>
-					<div class="col-lg-3">
-						<h3>@d.Weather.Description</h3>
-						<p>@d.Temperature.Min C - @d.Temperature.Max C</p>
+					<div class="panel-body">
+						<div class="container-fluid">
+							<div class="row text-center">
+								<div class="col-lg-4">
+									<h3>Morning temperature</h3>
+									<p>@temperature.MorningTemperature C</p>
+								</div>
+								<div class="col-lg-4">
+									<h3>Day temperature</h3>
+									<p>@temperature.DayTemperature C</p>
+								</div>
+								<div class="col-lg-4">
+									<h3>Evening temperature</h3>
+									<p>@temperature.EveningTemperature C</p>
+								</div>
+							</div>
+							<hr/>
+							<div class="row">
+								<div class="col-lg-offset-3 col-lg-3">
+									Wind: @d.Wind.Speed m/s
+								</div>
+								<div class="col-lg-offset-3 col-lg-3">
+									Humidity: @d.MainMeathurements.Humidity
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			}
+			</div>
 		}
+	}
+		
 	</div>
 </div>
 
