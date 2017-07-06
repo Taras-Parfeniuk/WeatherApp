@@ -1,8 +1,60 @@
+@model ILongForecast
 
 @{
-    ViewData["Title"] = "Daily";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = $"Daily forecast in {Model.City.Name}";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Daily</h2>
+<div class="row text-center">
+	<div class="col-lg-4 col-lg-offset-4">
+		<h2>@Model.City.Name, @Model.City.Country</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="text-center list-inline panel-default">
+				<div class="col-lg-4">
+					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name })
+				</div>
+				<div class="col-lg-4">
+					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name })
+				</div>
+				<div class="col-lg-4">
+					@Html.ActionLink("Five days", "Daily", "Forecast", new { city = Model.City.Name })
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row text-center">
+	<div class="col-lg-12">
+
+		@{
+			foreach (var d in Model.DayForecasts)
+			{
+				var weatherIco = $"/images/icon/{d.Weather.Icon}.svg";
+
+				<div class="row">
+					<hr />
+					<div class="col-lg-3">
+						<h3>@d.ForecastTime.DayOfWeek</h3>
+						<p>@d.ForecastTime.ToShortDateString()</p>
+					</div>
+					<div class="col-lg-3">
+						<img src=@weatherIco />
+					</div>
+					<div class="col-lg-3">
+						<h3>@d.Weather.Description</h3>
+						<p>@d.Temperature.Min C - @d.Temperature.Max C</p>
+					</div>
+				</div>
+			}
+		}
+	</div>
+</div>
+
+
 

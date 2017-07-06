@@ -110,9 +110,9 @@ namespace Services.Concrete
             return new DayForecast()
             {
                 Cloudiness = (double?)jObject["clouds"]["all"],
-                Rain = new Precipitation((int?)jObject["rain"]["3h"]),
-                Snow = new Precipitation((int?)jObject["snow"]["3h"]),
-                Wind = new Wind((double?)jObject["wind"]["speed"], (int?)jObject["deg"]),
+                Rain = new Precipitation((int?)jObject["rain"]?["3h"]),
+                Snow = new Precipitation((int?)jObject["snow"]?["3h"]),
+                Wind = new Wind((double?)jObject["wind"]["speed"], (int?)jObject["wind"]["deg"]),
                 Temperature = new DefaultTemperature()
                 {
                     Min = (double?)jObject["main"]["temp_min"],
@@ -132,8 +132,7 @@ namespace Services.Concrete
                     SeaLevelPressure = (int?)jObject["main"]["sea_level"],
                     Humidity = (int?)jObject["main"]["humidity"]
                 },
-                ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
-                MeathurementsTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt_txt"])
+                ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"])
             };
         }
 
