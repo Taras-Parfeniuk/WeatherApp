@@ -16,13 +16,13 @@
 		<div class="panel-body">
 			<div class="text-center list-inline panel-default">
 				<div class="col-lg-4">
-					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 				<div class="col-lg-4">
-					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 				<div class="col-lg-4">
-					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 	@{
 		foreach (var d in Model.DayForecasts)
 		{
-			var weatherIco = $"/images/icon/{d.Weather.Icon}.svg";
+			var weatherIco = $"/Content/images/icon/{d.Weather.Icon}.svg";
 			var temperature = (DailyTemperature)d.Temperature;
 
 			<div class="container">

@@ -1,5 +1,5 @@
+@using Domain.Entities.Abstraction;
 @model IMediumForecast
-
 @{
 	ViewData["Title"] = $"Hourly forecast in {Model.City.Name}";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,13 +16,13 @@
 		<div class="panel-body">
 			<div class="text-center list-inline panel-default">
 				<div class="col-lg-4">
-					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 				<div class="col-lg-4">
-					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 				<div class="col-lg-4">
-					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 			@{
 				var todayHours = new List<IShortForecast>();
 
-				@if (Model.HourForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
+				if (Model.HourForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
 				{
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -48,7 +48,54 @@
 
 								foreach (var h in todayHours)
 								{
-									<p>@h.ForecastTime</p>
+									var weatherIco = $"/Content/images/icon/{h.Weather.Icon}.svg";
+
+									<div class="row">
+										<div class="col-lg-2">
+											<h4>@h.ForecastTime.TimeOfDay</h4>
+										</div>
+										<div class="col-lg-2">
+											<div class="row">
+												<img src=@weatherIco />
+											</div>
+											<div class="row">
+												@h.Weather.Description
+											</div>
+										</div>
+										<div class="col-lg-2">
+											<div class="row">
+												<h4>Temperature:</h4>
+											</div>
+											<div class="row">
+												@h.Temperature.Min C - @h.Temperature.Min C
+											</div>
+										</div>
+										<div class="col-lg-2">
+											<div class="row">
+												<h4>Wind speed:</h4>
+											</div>
+											<div class="row">
+												@h.Wind.Speed m/s
+											</div>
+										</div>
+										<div class="col-lg-2">
+											<div class="row">
+												<h4>Pressure:</h4>
+											</div>
+											<div class="row">
+												@h.MainMeathurements.DefaultPressure
+											</div>
+										</div>
+										<div class="col-lg-2">
+											<div class="row">
+												<h4>Humidity:</h4>
+											</div>
+											<div class="row">
+												@h.MainMeathurements.Humidity
+											</div>
+										</div>
+									</div>
+									<hr />
 								}
 							}
 						</div>
@@ -85,7 +132,7 @@
 
 						@foreach (var h in dayHours)
 						{
-							var weatherIco = $"/images/icon/{h.Weather.Icon}.svg";
+							var weatherIco = $"/Content/images/icon/{h.Weather.Icon}.svg";
 
 							<div class="row">
 								<div class="col-lg-2">

@@ -16,13 +16,13 @@
 		<div class="panel-body">
 			<div class="text-center list-inline panel-default">
 				<div class="col-lg-4">
-					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 				<div class="col-lg-4">
-					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 				<div class="col-lg-4">
-					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name })
+					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
 				</div>
 			</div>
 		</div>
@@ -39,7 +39,7 @@
 						<div class="row">
 							<div class="col-lg-4">
 								@{ 
-									var weatherIco = $"/images/icon/{Model.Weather.Icon}.svg";
+									var weatherIco = $"/Content/images/icon/{Model.Weather.Icon}.svg";
 								}
 								<img src=@weatherIco />
 							</div>
@@ -58,7 +58,7 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-4">
-								<img src="~/images/icon/icon-1.svg" />
+								<img src="~/Content/images/icon/icon-1.svg" />
 							</div>
 							<div class="col-lg-3">
 								<div class="row">
@@ -74,7 +74,7 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-4">
-								<img src="~/images/icon/icon-7.svg" />
+								<img src="~/Content/images/icon/icon-7.svg" />
 							</div>
 							<div class="col-lg-3">
 								<div class="row">

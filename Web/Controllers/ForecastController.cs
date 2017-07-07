@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using System.Web.Mvc;
 
 using Services.Abstraction;
 using Services.Concrete;
@@ -11,7 +11,7 @@ namespace Web.Controllers
 {
     public class ForecastController : Controller
     {
-        public IActionResult Hourly(string city)
+        public ActionResult Hourly(string city)
         {
             IWeatherService weatherService = new OpenWeatherService(city);
             try
@@ -24,7 +24,7 @@ namespace Web.Controllers
             }
         }
 
-        public IActionResult Daily(string city)
+        public ActionResult Daily(string city)
         {
             IWeatherService weatherService = new OpenWeatherService(city);
             try
@@ -37,7 +37,7 @@ namespace Web.Controllers
             }
         }
 
-        public IActionResult Weather(string city)
+        public ActionResult Weather(string city)
         {
             IWeatherService weatherService = new OpenWeatherService(city);
             try

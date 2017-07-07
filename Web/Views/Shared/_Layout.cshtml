@@ -1,5 +1,4 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,8 +12,8 @@
 	<title>Bare - Start Bootstrap Template</title>
 
 	<!-- Bootstrap Core CSS -->
-	<link href="~/css/bootstrap.min.css" rel="stylesheet">
-	<link href="~/css/site.css" rel="stylesheet" />
+	<link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+	<link href="~/Content/css/site.css" rel="stylesheet" />
 	<!-- Custom CSS -->
 	<style>
 		body {
@@ -58,19 +57,19 @@
 							<div class="text-center list-inline panel-default">
 								<!--список міст можна зробити з топу запитів-->
 								<div class="col-lg-2">
-									@Html.ActionLink("Kyiv", "Weather", "Forecast", new { city = "Kyiv" })
+									@Html.ActionLink("Kyiv", "Weather", "Forecast", new { city = "Kyiv" }, null)
 								</div>
 								<div class="col-lg-2">
-									@Html.ActionLink("Lviv", "Weather", "Forecast", new { city = "Lviv" })
+									@Html.ActionLink("Lviv", "Weather", "Forecast", new { city = "Lviv" }, null)
 								</div>
 								<div class="col-lg-2">
-									@Html.ActionLink("Odessa", "Weather", "Forecast", new { city = "Odessa" })
+									@Html.ActionLink("Odessa", "Weather", "Forecast", new { city = "Odessa" }, null)
 								</div>
 								<div class="col-lg-2">
-									@Html.ActionLink("Kharkiv", "Weather", "Forecast", new { city = "Kharkiv" })
+									@Html.ActionLink("Kharkiv", "Weather", "Forecast", new { city = "Kharkiv" }, null)
 								</div>
 								<div class="col-lg-2">
-									@Html.ActionLink("Dnipropetrovsk", "Weather", "Forecast", new { city = "Dnipropetrovsk" })
+									@Html.ActionLink("Dnipropetrovsk", "Weather", "Forecast", new { city = "Dnipropetrovsk" }, null)
 								</div>
 							</div>
 						</div>
@@ -98,10 +97,10 @@
 		</div>
 		<!-- /.container -->
 		<!-- jQuery Version 1.11.1 -->
-	<script src="~/js/jquery.js"></script>
+	<script src="~/Content/js/jquery.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/Content/js/bootstrap.min.js"></script>
 
 </body>
 
