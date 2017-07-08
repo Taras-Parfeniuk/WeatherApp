@@ -11,12 +11,16 @@ namespace Web.Controllers
 {
     public class ForecastController : Controller
     {
+        public ForecastController(IWeatherService weatherService)
+        {
+            _weatherService = weatherService;
+        }
+
         public ActionResult Hourly(string city)
         {
-            IWeatherService weatherService = new OpenWeatherService(city);
             try
             {
-                return View(weatherService.MediumForecast);
+                return View(_weatherService.MediumForecast);
             }
             catch(Exception ex)
             {
@@ -26,10 +30,9 @@ namespace Web.Controllers
 
         public ActionResult Daily(string city)
         {
-            IWeatherService weatherService = new OpenWeatherService(city);
             try
             { 
-                return View(weatherService.LongForecast);
+                return View(_weatherService.LongForecast);
             }
             catch (Exception ex)
             {
@@ -39,15 +42,16 @@ namespace Web.Controllers
 
         public ActionResult Weather(string city)
         {
-            IWeatherService weatherService = new OpenWeatherService(city);
             try
             { 
-                return View(weatherService.CurrentWeather);
+                return View(_weatherService.CurrentWeather);
             }
             catch (Exception ex)
             {
                 return View("Error");
             }
         }
+
+        private IWeatherService _weatherService;
     }
 }
