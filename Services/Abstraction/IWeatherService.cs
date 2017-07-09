@@ -4,8 +4,8 @@ namespace Services.Abstraction
 {
     public interface IWeatherService
     {
-        IMediumForecast MediumForecast { get; }
-        ILongForecast LongForecast { get; }
-        ICurrentWeather CurrentWeather { get; }
+        IMediumForecast MediumForecast(string city);
+        ILongForecast LongForecast(string city);
+        ICurrentWeather CurrentWeather(string city);
     }
 }

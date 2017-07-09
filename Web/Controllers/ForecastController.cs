@@ -20,7 +20,7 @@ namespace Web.Controllers
         {
             try
             {
-                return View(_weatherService.MediumForecast);
+                return View(_weatherService.MediumForecast(city));
             }
             catch(Exception ex)
             {
@@ -32,7 +32,7 @@ namespace Web.Controllers
         {
             try
             { 
-                return View(_weatherService.LongForecast);
+                return View(_weatherService.LongForecast(city));
             }
             catch (Exception ex)
             {
@@ -44,7 +44,7 @@ namespace Web.Controllers
         {
             try
             { 
-                return View(_weatherService.CurrentWeather);
+                return View(_weatherService.CurrentWeather(city));
             }
             catch (Exception ex)
             {
