@@ -33,7 +33,7 @@
 	<div class="col-lg-12">
 		<div class="container">
 			@{
-				var todayHours = new List<IShortForecast>();
+				var todayHours = new List<IForecast>();
 
 				if (Model.HourForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
 				{
@@ -102,7 +102,7 @@
 					</div>
 								}
 
-								var hours = new List<IShortForecast>();
+								var hours = new List<IForecast>();
 								hours = Model.HourForecasts.Skip(todayHours.Count()).ToList();
 			}
 
@@ -113,7 +113,7 @@
 						<h3>@hours.First().ForecastTime.DayOfWeek</h3>
 					</div>
 					@{
-						var dayHours = new List<IShortForecast>();
+						var dayHours = new List<IForecast>();
 						var nextDayStartId = hours.FindIndex(1, h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
 						var dayStart = nextDayStartId > 0 ? hours[nextDayStartId] : null;
 

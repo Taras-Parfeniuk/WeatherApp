@@ -9,6 +9,8 @@ namespace Domain.Entities.Abstraction
 {
     public interface IForecast
     {
+        Guid Id { get; set; }
+
         WeatherState Weather { get; set; }
         DefaultTemperature Temperature { get; set; }
         Measurements MainMeathurements { get; set; }
@@ -16,5 +18,8 @@ namespace Domain.Entities.Abstraction
         double? Cloudiness { get; set; }
         DateTime MeathurementsTime { get; set; }
         DateTime ForecastTime { get; set; }
+
+        Precipitation Rain { get; set; }
+        Precipitation Snow { get; set; }
     }
 }

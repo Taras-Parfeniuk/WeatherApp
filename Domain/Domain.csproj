@@ -30,10 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,15 +51,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Abstraction\ICitiesRepository.cs" />
+    <Compile Include="Data\Abstraction\IQueriesRepository.cs" />
+    <Compile Include="Data\Abstraction\IRepository.cs" />
+    <Compile Include="Data\Concretic\EF\BaseRepository.cs" />
+    <Compile Include="Data\Concretic\EF\CitiesRepository.cs" />
+    <Compile Include="Data\Concretic\EF\ElectedCitiesRepository.cs" />
+    <Compile Include="Data\Concretic\EF\QueriesRepository.cs" />
+    <Compile Include="Data\Concretic\EF\WeatherDbContext.cs" />
     <Compile Include="Entities\Abstraction\ICurrentWeather.cs" />
     <Compile Include="Entities\Abstraction\IForecast.cs" />
     <Compile Include="Entities\Abstraction\ILocation.cs" />
     <Compile Include="Entities\Abstraction\ILongForecast.cs" />
     <Compile Include="Entities\Abstraction\IMediumForecast.cs" />
-    <Compile Include="Entities\Abstraction\IShortForecast.cs" />
+    <Compile Include="Entities\ForecastQueryInfo.cs" />
     <Compile Include="Entities\Forecast\CurrentDayForecast.cs" />
     <Compile Include="Entities\Forecast\DayForecast.cs" />
-    <Compile Include="Entities\Forecast\DefaultForecast.cs" />
     <Compile Include="Entities\Forecast\FiveDaysForecast.cs" />
     <Compile Include="Entities\Forecast\SixteenDaysForecast.cs" />
     <Compile Include="Entities\Location\City.cs" />
@@ -66,7 +81,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Ninject;
 
 using Services.Abstraction;
-using Services.Concrete;
+using Services.Concretic;
 
 namespace Web.Util
 {

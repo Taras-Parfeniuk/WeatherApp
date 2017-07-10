@@ -10,7 +10,7 @@ using Domain.Entities.Location;
 using Domain.Entities.Weather;
 using Domain.Entities.Temperature;
 
-namespace Services.Concrete
+namespace Services.Concretic
 {
     public class OpenWeatherForecastConverter : IForecastConverter
     {
@@ -71,7 +71,7 @@ namespace Services.Concrete
                     Country = (string)jObject["city"]["country"],
                     Coordinates = new Coordinates((double)jObject["city"]["coord"]["lon"], (double)jObject["city"]["coord"]["lat"])
                 },
-                HourForecasts = new List<IShortForecast>()
+                HourForecasts = new List<IForecast>()
             };
 
             for (var i = 0; i < (int)jObject["cnt"]; i++)
@@ -99,13 +99,13 @@ namespace Services.Concrete
             };
             for (var i = 0; i < (int)jObject["cnt"]; i++)
             {
-                forecast.DayForecasts.Add(ToDefaultForecast((JObject)jObject["list"][i]));
+                forecast.DayForecasts.Add(ToDayForecast((JObject)jObject["list"][i]));
             }
 
             return forecast;
         }
 
-        public IShortForecast ToShortForecast(JObject jObject)
+        public IForecast ToShortForecast(JObject jObject)
         {
             return new DayForecast()
             {
@@ -136,16 +136,16 @@ namespace Services.Concrete
             };
         }
 
-        public IShortForecast ToShortForecast(string json)
+        public IForecast ToShortForecast(string json)
         {
             var jObject = JObject.Parse(json);
 
             return ToShortForecast(jObject);
         }
 
-        public IForecast ToDefaultForecast(JObject jObject)
+        public IForecast ToDayForecast(JObject jObject)
         {
-            return new DefaultForecast()
+            return new DayForecast()
             {
                 Cloudiness = (double?)jObject["clouds"],
                 ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
@@ -174,11 +174,11 @@ namespace Services.Concrete
             };
         }
 
-        public IForecast ToDefaultForecast(string json)
+        public IForecast ToDayForecast(string json)
         {
             var jObject = JObject.Parse(json);
 
-            return ToDefaultForecast(jObject);
+            return ToDayForecast(jObject);
         }
     }
 }

@@ -9,5 +9,7 @@ namespace Domain.Entities.Forecast
         public DateTime Sunrise { get; set; }
         public DateTime Sunset { get; set; }
         public ILocation City { get; set; }
+
+        public CurrentDayForecast() : base() { }
     }
 }

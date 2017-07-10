@@ -45,8 +45,8 @@
   <ItemGroup>
     <Compile Include="Abstraction\IForecastConverter.cs" />
     <Compile Include="Abstraction\IWeatherService.cs" />
-    <Compile Include="Concrete\OpenWeatherService.cs" />
-    <Compile Include="Concrete\OpenWeatherForecastConverter.cs" />
+    <Compile Include="Concretic\OpenWeatherService.cs" />
+    <Compile Include="Concretic\OpenWeatherForecastConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

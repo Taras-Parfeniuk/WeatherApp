@@ -5,7 +5,7 @@ using System.IO;
 using Domain.Entities.Abstraction;
 using Services.Abstraction;
 
-namespace Services.Concrete
+namespace Services.Concretic
 {
     public class OpenWeatherService : IWeatherService
     { 

@@ -7,7 +7,7 @@ namespace Services.Abstraction
         ICurrentWeather ToCurrentWeather(string json);
         ILongForecast ToLongForecast(string json);
         IMediumForecast ToMediumForecast(string json);
-        IShortForecast ToShortForecast(string json);
-        IForecast ToDefaultForecast(string json);
+        IForecast ToShortForecast(string json);
+        IForecast ToDayForecast(string json);
     }
 }
