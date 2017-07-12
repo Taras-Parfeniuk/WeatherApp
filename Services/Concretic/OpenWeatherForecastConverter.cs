@@ -8,9 +8,8 @@ using Domain.Entities.Abstraction;
 using Domain.Entities.Forecast;
 using Domain.Entities.Location;
 using Domain.Entities.Weather;
-using Domain.Entities.Temperature;
 
-namespace Services.Concrete
+namespace Services.Concretic
 {
     public class OpenWeatherForecastConverter : IForecastConverter
     {
@@ -22,7 +21,7 @@ namespace Services.Concrete
             {
                 City = new City()
                 {
-                    Id = (int?)jObject["id"],
+                    Id = (int)jObject["id"],
                     Name = (string)jObject["name"],
                     Country = (string)jObject["sys"]["country"],
                     Coordinates = new Coordinates((double?)jObject["coord"]["lon"], (double?)jObject["coord"]["lat"]) 
@@ -32,12 +31,10 @@ namespace Services.Concrete
                 Snow = new Precipitation((int?)jObject["snow"]?["3h"]),
                 MeathurementsTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
                 ForecastTime = DateTime.Now,
-                Temperature = new HourlyTemperature()
-                {
-                    Min = (double?)jObject["main"]["temp_min"],
-                    Max = (double?)jObject["main"]["temp_max"],
-                    CurrentTemperature = (double?)jObject["main"]["temp"],
-                },
+                MinTemperature = (double?)jObject["main"]["temp_min"],
+                MaxTemperature = (double?)jObject["main"]["temp_max"],
+                CurrentTemperature = (double?)jObject["main"]["temp"],
+                
                 Wind = new Wind((double?)jObject["wind"]["speed"], (int?)jObject["deg"]),
                 Sunrise = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunrise"]),
                 Sunset = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunset"]),
@@ -71,7 +68,7 @@ namespace Services.Concrete
                     Country = (string)jObject["city"]["country"],
                     Coordinates = new Coordinates((double)jObject["city"]["coord"]["lon"], (double)jObject["city"]["coord"]["lat"])
                 },
-                HourForecasts = new List<IShortForecast>()
+                HourForecasts = new List<IForecast>()
             };
 
             for (var i = 0; i < (int)jObject["cnt"]; i++)
@@ -99,13 +96,13 @@ namespace Services.Concrete
             };
             for (var i = 0; i < (int)jObject["cnt"]; i++)
             {
-                forecast.DayForecasts.Add(ToDefaultForecast((JObject)jObject["list"][i]));
+                forecast.DayForecasts.Add(ToDayForecast((JObject)jObject["list"][i]));
             }
 
             return forecast;
         }
 
-        public IShortForecast ToShortForecast(JObject jObject)
+        public IForecast ToShortForecast(JObject jObject)
         {
             return new DayForecast()
             {
@@ -113,11 +110,8 @@ namespace Services.Concrete
                 Rain = new Precipitation((int?)jObject["rain"]?["3h"]),
                 Snow = new Precipitation((int?)jObject["snow"]?["3h"]),
                 Wind = new Wind((double?)jObject["wind"]["speed"], (int?)jObject["wind"]["deg"]),
-                Temperature = new DefaultTemperature()
-                {
-                    Min = (double?)jObject["main"]["temp_min"],
-                    Max = (double?)jObject["main"]["temp_max"],
-                },
+                MinTemperature = (double?)jObject["main"]["temp_min"],
+                MaxTemperature = (double?)jObject["main"]["temp_max"],
                 Weather = new WeatherState()
                 {
                     Id = (int?)jObject["weather"][0]["id"],
@@ -136,16 +130,16 @@ namespace Services.Concrete
             };
         }
 
-        public IShortForecast ToShortForecast(string json)
+        public IForecast ToShortForecast(string json)
         {
             var jObject = JObject.Parse(json);
 
             return ToShortForecast(jObject);
         }
 
-        public IForecast ToDefaultForecast(JObject jObject)
+        public IForecast ToDayForecast(JObject jObject)
         {
-            return new DefaultForecast()
+            return new DayForecast()
             {
                 Cloudiness = (double?)jObject["clouds"],
                 ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
@@ -158,14 +152,12 @@ namespace Services.Concrete
                     Main = (string)jObject["weather"][0]["main"],
                     Icon = (string)jObject["weather"][0]["icon"]
                 },
-                Temperature = new DailyTemperature()
-                {
-                    Max = (double?)jObject["temp"]["max"],
-                    Min = (double?)jObject["temp"]["min"],
-                    DayTemperature = (double?)jObject["temp"]["day"],
-                    EveningTemperature = (double?)jObject["temp"]["eve"],
-                    MorningTemperature = (double?)jObject["temp"]["morn"]
-                },
+                MinTemperature = (double?)jObject["temp"]["temp_min"],
+                MaxTemperature = (double?)jObject["temp"]["temp_max"],
+                DayTemperature = (double?)jObject["temp"]["day"],
+                EveningTemperature = (double?)jObject["temp"]["eve"],
+                MorningTemperature = (double?)jObject["temp"]["morn"],
+                
                 MainMeathurements = new Measurements()
                 {
                     Humidity = (int?)jObject["humidity"],
@@ -174,11 +166,11 @@ namespace Services.Concrete
             };
         }
 
-        public IForecast ToDefaultForecast(string json)
+        public IForecast ToDayForecast(string json)
         {
             var jObject = JObject.Parse(json);
 
-            return ToDefaultForecast(jObject);
+            return ToDayForecast(jObject);
         }
     }
 }

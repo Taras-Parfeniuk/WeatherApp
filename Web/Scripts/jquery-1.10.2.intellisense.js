@@ -1952,17 +1952,17 @@ intellisense.annotate(jQuery.fn, {
   },
   'on': function() {
     /// <signature>
-    ///   <summary>Attach an event handler function for one or more events to the selected elements.</summary>
+    ///   <summary>Attach an event handler function for one or more events to the sSelected elements.</summary>
     ///   <param name="events" type="String">One or more space-separated event types and optional namespaces, such as "click" or "keydown.myPlugin".</param>
-    ///   <param name="selector" type="String">A selector string to filter the descendants of the selected elements that trigger the event. If the selector is null or omitted, the event is always triggered when it reaches the selected element.</param>
+    ///   <param name="selector" type="String">A selector string to filter the descendants of the sSelected elements that trigger the event. If the selector is null or omitted, the event is always triggered when it reaches the sSelected element.</param>
     ///   <param name="data" type="Anything">Data to be passed to the handler in event.data when an event is triggered.</param>
     ///   <param name="handler(eventObject)" type="Function">A function to execute when the event is triggered. The value false is also allowed as a shorthand for a function that simply does return false.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Attach an event handler function for one or more events to the selected elements.</summary>
+    ///   <summary>Attach an event handler function for one or more events to the sSelected elements.</summary>
     ///   <param name="events" type="PlainObject">An object in which the string keys represent one or more space-separated event types and optional namespaces, and the values represent a handler function to be called for the event(s).</param>
-    ///   <param name="selector" type="String">A selector string to filter the descendants of the selected elements that will call the handler. If the selector is null or omitted, the handler is always called when it reaches the selected element.</param>
+    ///   <param name="selector" type="String">A selector string to filter the descendants of the sSelected elements that will call the handler. If the selector is null or omitted, the handler is always called when it reaches the sSelected element.</param>
     ///   <param name="data" type="Anything">Data to be passed to the handler in event.data when an event occurs.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -1978,7 +1978,7 @@ intellisense.annotate(jQuery.fn, {
     /// <signature>
     ///   <summary>Attach a handler to an event for the elements. The handler is executed at most once per element.</summary>
     ///   <param name="events" type="String">One or more space-separated event types and optional namespaces, such as "click" or "keydown.myPlugin".</param>
-    ///   <param name="selector" type="String">A selector string to filter the descendants of the selected elements that trigger the event. If the selector is null or omitted, the event is always triggered when it reaches the selected element.</param>
+    ///   <param name="selector" type="String">A selector string to filter the descendants of the sSelected elements that trigger the event. If the selector is null or omitted, the event is always triggered when it reaches the sSelected element.</param>
     ///   <param name="data" type="Anything">Data to be passed to the handler in event.data when an event is triggered.</param>
     ///   <param name="handler(eventObject)" type="Function">A function to execute when the event is triggered. The value false is also allowed as a shorthand for a function that simply does return false.</param>
     ///   <returns type="jQuery" />
@@ -1986,7 +1986,7 @@ intellisense.annotate(jQuery.fn, {
     /// <signature>
     ///   <summary>Attach a handler to an event for the elements. The handler is executed at most once per element.</summary>
     ///   <param name="events" type="PlainObject">An object in which the string keys represent one or more space-separated event types and optional namespaces, and the values represent a handler function to be called for the event(s).</param>
-    ///   <param name="selector" type="String">A selector string to filter the descendants of the selected elements that will call the handler. If the selector is null or omitted, the handler is always called when it reaches the selected element.</param>
+    ///   <param name="selector" type="String">A selector string to filter the descendants of the sSelected elements that will call the handler. If the selector is null or omitted, the handler is always called when it reaches the sSelected element.</param>
     ///   <param name="data" type="Anything">Data to be passed to the handler in event.data when an event occurs.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -2285,8 +2285,8 @@ intellisense.annotate(jQuery.fn, {
     ///   <returns type="jQuery" />
     /// </signature>
   },
-  'selected': function() {
-    /// <summary>Selects all elements that are selected.</summary>
+  'sSelected': function() {
+    /// <summary>Selects all elements that are sSelected.</summary>
   },
   'selector': function() {
     /// <summary>A selector representing selector originally passed to jQuery().</summary>
@@ -2334,8 +2334,8 @@ intellisense.annotate(jQuery.fn, {
   'slice': function() {
     /// <signature>
     ///   <summary>Reduce the set of matched elements to a subset specified by a range of indices.</summary>
-    ///   <param name="start" type="Number">An integer indicating the 0-based position at which the elements begin to be selected. If negative, it indicates an offset from the end of the set.</param>
-    ///   <param name="end" type="Number">An integer indicating the 0-based position at which the elements stop being selected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.</param>
+    ///   <param name="start" type="Number">An integer indicating the 0-based position at which the elements begin to be sSelected. If negative, it indicates an offset from the end of the set.</param>
+    ///   <param name="end" type="Number">An integer indicating the 0-based position at which the elements stop being sSelected. If negative, it indicates an offset from the end of the set. If omitted, the range continues until the end of the set.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },
@@ -2581,7 +2581,7 @@ intellisense.annotate(jQuery.fn, {
   'val': function() {
     /// <signature>
     ///   <summary>Set the value of each element in the set of matched elements.</summary>
-    ///   <param name="value" type="Array">A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.</param>
+    ///   <param name="value" type="Array">A string of text or an array of strings corresponding to the value of each matched element to set as sSelected/checked.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>

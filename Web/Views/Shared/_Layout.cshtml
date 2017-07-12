@@ -45,6 +45,10 @@
 					<span class="icon-bar"></span>
 				</button>
 				@Html.ActionLink("Home", "Index", "Home", null, new { @class = "navbar-brand" })
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Cities", "Index", "SelectedCities")</li>
+					<li>@Html.ActionLink("History", "Queries", "History")</li>
+				</ul>
 			</div>
 		</div>
 		<!-- /.container -->

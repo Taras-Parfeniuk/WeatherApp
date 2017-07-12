@@ -29,10 +29,10 @@ $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/validate
 	validate: function( options ) {
 
-		// if nothing is selected, return nothing; can't chain anyway
+		// if nothing is sSelected, return nothing; can't chain anyway
 		if ( !this.length ) {
 			if ( options && options.debug && window.console ) {
-				console.warn( "Nothing selected, can't validate, returning nothing." );
+				console.warn( "Nothing sSelected, can't validate, returning nothing." );
 			}
 			return;
 		}
@@ -756,7 +756,7 @@ $.extend($.validator, {
 		getLength: function( value, element ) {
 			switch( element.nodeName.toLowerCase() ) {
 			case "select":
-				return $("option:selected", element).length;
+				return $("option:sSelected", element).length;
 			case "input":
 				if ( this.checkable( element) ) {
 					return this.findByName(element.name).filter(":checked").length;

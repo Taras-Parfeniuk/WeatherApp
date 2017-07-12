@@ -9,6 +9,11 @@ namespace Domain.Entities.Location
         public double? Longitude { get; set; }
         public double? Latitude { get; set; }
 
+        public Coordinates()
+        {
+
+        }
+
         public Coordinates(double? lon, double? lat)
         {
             Longitude = lon;

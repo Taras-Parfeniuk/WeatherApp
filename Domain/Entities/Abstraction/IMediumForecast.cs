@@ -6,7 +6,9 @@ namespace Domain.Entities.Abstraction
 {
     public interface IMediumForecast
     {
+        Guid Id { get; set; }
+
         ILocation City { get; set; }
-        List<IShortForecast> HourForecasts { get; set; }
+        List<IForecast> HourForecasts { get; set; }
     }
 }
