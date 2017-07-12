@@ -36,7 +36,6 @@
 		foreach (var d in Model.DayForecasts)
 		{
 			var weatherIco = $"/Content/images/icon/{d.Weather.Icon}.svg";
-			var temperature = (DailyTemperature)d.Temperature;
 
 			<div class="container">
 				<div class="panel panel-default">
@@ -56,15 +55,15 @@
 							<div class="row text-center">
 								<div class="col-lg-4">
 									<h3>Morning temperature</h3>
-									<p>@temperature.MorningTemperature C</p>
+									<p>@d.MorningTemperature C</p>
 								</div>
 								<div class="col-lg-4">
 									<h3>Day temperature</h3>
-									<p>@temperature.DayTemperature C</p>
+									<p>@d.DayTemperature C</p>
 								</div>
 								<div class="col-lg-4">
 									<h3>Evening temperature</h3>
-									<p>@temperature.EveningTemperature C</p>
+									<p>@d.EveningTemperature C</p>
 								</div>
 							</div>
 							<hr/>

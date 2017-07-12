@@ -14,14 +14,21 @@ namespace Domain.Data.Concretic.EF
         public virtual void Add(TEntity entity)
         {
             Items.Add(entity);
+            _context.SaveChanges();
         }
 
         public virtual void Remove(TEntity entity)
         {
             Items.Remove(entity);
+            _context.SaveChanges();
         }
 
         public virtual void Update(TEntity entity) { }
+
+        public virtual List<TEntity> GetAll()
+        {
+            return Items.ToList();
+        }
 
         protected readonly WeatherDbContext _context = new WeatherDbContext();
         protected virtual DbSet<TEntity> Items { get; set; }

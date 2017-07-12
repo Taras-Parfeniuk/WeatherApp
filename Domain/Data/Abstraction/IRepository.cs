@@ -7,5 +7,7 @@ namespace Domain.Data.Abstraction
         void Add(TEntity entity);
         void Remove(TEntity entity);
         void Update(TEntity entity);
+
+        List<TEntity> GetAll();
     }
 }

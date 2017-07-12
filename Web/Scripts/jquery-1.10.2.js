@@ -1085,7 +1085,7 @@ var i,
 		return -1;
 	},
 
-	booleans = "checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",
+	booleans = "checked|sSelected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",
 
 	// Regular expressions
 
@@ -1612,15 +1612,15 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// setting a boolean content attribute,
 			// since its presence should be enough
 			// http://bugs.jquery.com/ticket/12359
-			div.innerHTML = "<select><option selected=''></option></select>";
+			div.innerHTML = "<select><option sSelected=''></option></select>";
 
 			// Support: IE8
 			// Boolean attributes and "value" are not treated correctly
-			if ( !div.querySelectorAll("[selected]").length ) {
+			if ( !div.querySelectorAll("[sSelected]").length ) {
 				rbuggyQSA.push( "\\[" + whitespace + "*(?:value|" + booleans + ")" );
 			}
 
-			// Webkit/Opera - :checked should return selected option elements
+			// Webkit/Opera - :checked should return sSelected option elements
 			// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
 			// IE8 throws error here and will not see later tests
 			if ( !div.querySelectorAll(":checked").length ) {
@@ -2289,20 +2289,20 @@ Expr = Sizzle.selectors = {
 		},
 
 		"checked": function( elem ) {
-			// In CSS3, :checked should return both checked and selected elements
+			// In CSS3, :checked should return both checked and sSelected elements
 			// http://www.w3.org/TR/2011/REC-css3-selectors-20110929/#checked
 			var nodeName = elem.nodeName.toLowerCase();
-			return (nodeName === "input" && !!elem.checked) || (nodeName === "option" && !!elem.selected);
+			return (nodeName === "input" && !!elem.checked) || (nodeName === "option" && !!elem.sSelected);
 		},
 
-		"selected": function( elem ) {
-			// Accessing this property makes selected-by-default
+		"sSelected": function( elem ) {
+			// Accessing this property makes sSelected-by-default
 			// options in Safari work properly
 			if ( elem.parentNode ) {
-				elem.parentNode.selectedIndex;
+				elem.parentNode.sSelectedIndex;
 			}
 
-			return elem.selected === true;
+			return elem.sSelected === true;
 		},
 
 		// Contents
@@ -3387,9 +3387,9 @@ jQuery.support = (function( support ) {
 	// Check the default checkbox/radio value ("" on WebKit; "on" elsewhere)
 	support.checkOn = !!input.value;
 
-	// Make sure that a selected-by-default option has a working selected property.
+	// Make sure that a sSelected-by-default option has a working sSelected property.
 	// (WebKit defaults to false instead of true, IE too, if it's in an optgroup)
-	support.optSelected = opt.selected;
+	support.optSSelected = opt.sSelected;
 
 	// Tests for enctype support on a form (#6743)
 	support.enctype = !!document.createElement("form").enctype;
@@ -4063,7 +4063,7 @@ var nodeHook, boolHook,
 	rreturn = /\r/g,
 	rfocusable = /^(?:input|select|textarea|button|object)$/i,
 	rclickable = /^(?:a|area)$/i,
-	ruseDefault = /^(?:checked|selected)$/i,
+	ruseDefault = /^(?:checked|sSelected)$/i,
 	getSetAttribute = jQuery.support.getSetAttribute,
 	getSetInput = jQuery.support.input;
 
@@ -4304,7 +4304,7 @@ jQuery.extend({
 			get: function( elem ) {
 				var value, option,
 					options = elem.options,
-					index = elem.selectedIndex,
+					index = elem.sSelectedIndex,
 					one = elem.type === "select-one" || index < 0,
 					values = one ? null : [],
 					max = one ? index + 1 : options.length,
@@ -4312,12 +4312,12 @@ jQuery.extend({
 						max :
 						one ? index : 0;
 
-				// Loop through all the selected options
+				// Loop through all the sSelected options
 				for ( ; i < max; i++ ) {
 					option = options[ i ];
 
-					// oldIE doesn't update selected after form reset (#2551)
-					if ( ( option.selected || i === index ) &&
+					// oldIE doesn't update sSelected after form reset (#2551)
+					if ( ( option.sSelected || i === index ) &&
 							// Don't return options that are disabled or in a disabled optgroup
 							( jQuery.support.optDisabled ? !option.disabled : option.getAttribute("disabled") === null ) &&
 							( !option.parentNode.disabled || !jQuery.nodeName( option.parentNode, "optgroup" ) ) ) {
@@ -4346,14 +4346,14 @@ jQuery.extend({
 
 				while ( i-- ) {
 					option = options[ i ];
-					if ( (option.selected = jQuery.inArray( jQuery(option).val(), values ) >= 0) ) {
+					if ( (option.sSelected = jQuery.inArray( jQuery(option).val(), values ) >= 0) ) {
 						optionSet = true;
 					}
 				}
 
 				// force browsers to behave consistently when non-matching value is set
 				if ( !optionSet ) {
-					elem.selectedIndex = -1;
+					elem.sSelectedIndex = -1;
 				}
 				return values;
 			}
@@ -4423,7 +4423,7 @@ jQuery.extend({
 					if ( getSetInput && getSetAttribute || !ruseDefault.test( name ) ) {
 						elem[ propName ] = false;
 					// Support: IE<9
-					// Also clear defaultChecked/defaultSelected (if appropriate)
+					// Also clear defaultChecked/defaultSSelected (if appropriate)
 					} else {
 						elem[ jQuery.camelCase( "default-" + name ) ] =
 							elem[ propName ] = false;
@@ -4518,7 +4518,7 @@ boolHook = {
 			// IE<8 needs the *property* name
 			elem.setAttribute( !getSetAttribute && jQuery.propFix[ name ] || name, name );
 
-		// Use defaultChecked and defaultSelected for oldIE
+		// Use defaultChecked and defaultSSelected for oldIE
 		} else {
 			elem[ jQuery.camelCase( "default-" + name ) ] = elem[ name ] = true;
 		}
@@ -4660,19 +4660,19 @@ if ( !jQuery.support.style ) {
 	};
 }
 
-// Safari mis-reports the default selected property of an option
-// Accessing the parent's selectedIndex property fixes it
-if ( !jQuery.support.optSelected ) {
-	jQuery.propHooks.selected = {
+// Safari mis-reports the default sSelected property of an option
+// Accessing the parent's sSelectedIndex property fixes it
+if ( !jQuery.support.optSSelected ) {
+	jQuery.propHooks.sSelected = {
 		get: function( elem ) {
 			var parent = elem.parentNode;
 
 			if ( parent ) {
-				parent.selectedIndex;
+				parent.sSelectedIndex;
 
 				// Make sure that it also works with optgroups, see #5701
 				if ( parent.parentNode ) {
-					parent.parentNode.selectedIndex;
+					parent.parentNode.sSelectedIndex;
 				}
 			}
 			return null;
@@ -6425,10 +6425,10 @@ function fixCloneNodeIssues( src, dest ) {
 			dest.value = src.value;
 		}
 
-	// IE6-8 fails to return the selected option to the default selected
+	// IE6-8 fails to return the sSelected option to the default sSelected
 	// state when cloning options
 	} else if ( nodeName === "option" ) {
-		dest.defaultSelected = dest.selected = src.defaultSelected;
+		dest.defaultSSelected = dest.sSelected = src.defaultSSelected;
 
 	// IE6-8 fails to set the defaultValue to the correct value when
 	// cloning other types of input fields
@@ -7691,7 +7691,7 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 		seekingTransport = ( structure === transports );
 
 	function inspect( dataType ) {
-		var selected;
+		var sSelected;
 		inspected[ dataType ] = true;
 		jQuery.each( structure[ dataType ] || [], function( _, prefilterOrFactory ) {
 			var dataTypeOrTransport = prefilterOrFactory( options, originalOptions, jqXHR );
@@ -7700,10 +7700,10 @@ function inspectPrefiltersOrTransports( structure, options, originalOptions, jqX
 				inspect( dataTypeOrTransport );
 				return false;
 			} else if ( seekingTransport ) {
-				return !( selected = dataTypeOrTransport );
+				return !( sSelected = dataTypeOrTransport );
 			}
 		});
-		return selected;
+		return sSelected;
 	}
 
 	return inspect( options.dataTypes[ 0 ] ) || !inspected[ "*" ] && inspect( "*" );

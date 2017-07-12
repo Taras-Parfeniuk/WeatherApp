@@ -15,10 +15,21 @@ namespace Domain.Data.Concretic.EF
     public class WeatherDbContext : DbContext
     {
         public DbSet<City> Cities { get; set; }
-        public DbSet<City> ElectedCities { get; set; }
-        public DbSet<DayForecast> Forecasts { get; set; }
+        public DbSet<SelectedCity> SelectedCities { get; set; }
+        public DbSet<StoredForecast> Forecasts { get; set; }
         public DbSet<ForecastQueryInfo> Queries { get; set; }
 
-        public WeatherDbContext() : base(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString) { }
+        public WeatherDbContext() : base("WeatherDbContext")
+        {        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<SelectedCity>()
+                .Map(m =>
+                {
+                    m.MapInheritedProperties();
+                    m.ToTable("SelectedCities");
+                });
+        }
     }
 }

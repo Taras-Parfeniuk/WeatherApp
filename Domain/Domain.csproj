@@ -51,12 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Abstraction\ICitiesRepository.cs" />
+    <Compile Include="Data\Abstraction\ISelectedCitiesRepository.cs" />
     <Compile Include="Data\Abstraction\IQueriesRepository.cs" />
     <Compile Include="Data\Abstraction\IRepository.cs" />
     <Compile Include="Data\Concretic\EF\BaseRepository.cs" />
-    <Compile Include="Data\Concretic\EF\CitiesRepository.cs" />
-    <Compile Include="Data\Concretic\EF\ElectedCitiesRepository.cs" />
+    <Compile Include="Data\Concretic\EF\SelectedCitiesRepository.cs" />
     <Compile Include="Data\Concretic\EF\QueriesRepository.cs" />
     <Compile Include="Data\Concretic\EF\WeatherDbContext.cs" />
     <Compile Include="Entities\Abstraction\ICurrentWeather.cs" />
@@ -69,11 +68,10 @@
     <Compile Include="Entities\Forecast\DayForecast.cs" />
     <Compile Include="Entities\Forecast\FiveDaysForecast.cs" />
     <Compile Include="Entities\Forecast\SixteenDaysForecast.cs" />
+    <Compile Include="Entities\StoredForecast.cs" />
     <Compile Include="Entities\Location\City.cs" />
     <Compile Include="Entities\Location\Coordinates.cs" />
-    <Compile Include="Entities\Temperature\DailyTemperature.cs" />
-    <Compile Include="Entities\Temperature\DefaultTemperature.cs" />
-    <Compile Include="Entities\Temperature\HourlyTemperature.cs" />
+    <Compile Include="Entities\Location\SelectedCity.cs" />
     <Compile Include="Entities\Weather\Measurements.cs" />
     <Compile Include="Entities\Weather\Precipitation.cs" />
     <Compile Include="Entities\Weather\WeatherState.cs" />
@@ -84,6 +82,5 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

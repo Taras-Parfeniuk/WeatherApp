@@ -5,6 +5,8 @@ using System.Web.Mvc;
 
 using Ninject;
 
+using Domain.Data.Abstraction;
+using Domain.Data.Concretic.EF;
 using Services.Abstraction;
 using Services.Concretic;
 
@@ -30,7 +32,10 @@ namespace Web.Util
 
         private void AddBindings()
         {
+            _kernel.Bind<ISelectedCitiesRepository>().To<SelectedCitiesRepository>();
+            _kernel.Bind<IQueriesRepository>().To<QueriesRepository>();
             _kernel.Bind<IWeatherService>().To<OpenWeatherService>();
+            _kernel.Bind<ICitiesService>().To<OpenWeatherCitiesService>();
         }
 
         private IKernel _kernel;

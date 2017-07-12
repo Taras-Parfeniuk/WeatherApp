@@ -41,7 +41,7 @@ $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/validate
 	validate: function( options ) {
 		/// <summary>
-		/// Validates the selected form. This method sets up event handlers for submit, focus,
+		/// Validates the sSelected form. This method sets up event handlers for submit, focus,
 		/// keyup, blur and click to trigger validation of the entire form or individual
 		/// elements. Each one can be disabled, see the onxxx options (onsubmit, onfocusout,
 		/// onkeyup, onclick). focusInvalid focuses elements when submitting a invalid form.
@@ -50,9 +50,9 @@ $.extend($.fn, {
 		/// A set of key/value pairs that configure the validate. All options are optional.
 		/// </param>
 
-		// if nothing is selected, return nothing; can't chain anyway
+		// if nothing is sSelected, return nothing; can't chain anyway
 		if (!this.length) {
-			options && options.debug && window.console && console.warn( "nothing selected, can't validate, returning nothing" );
+			options && options.debug && window.console && console.warn( "nothing sSelected, can't validate, returning nothing" );
 			return;
 		}
 
@@ -124,7 +124,7 @@ $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/valid
 	valid: function() {
 		/// <summary>
-		/// Checks if the selected form is valid or if all selected elements are valid.
+		/// Checks if the sSelected form is valid or if all sSelected elements are valid.
 		/// validate() needs to be called on the form before checking it using this method.
 		/// </summary>
 		/// <returns type="Boolean" />
@@ -160,7 +160,7 @@ $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/rules
 	rules: function(command, argument) {
 		/// <summary>
-		/// Return the validations rules for the first selected element.
+		/// Return the validations rules for the first sSelected element.
 		/// </summary>
 		/// <param name="command" type="String">
 		/// Can be either "add" or "remove".
@@ -791,7 +791,7 @@ $.extend($.validator, {
 		getLength: function(value, element) {
 			switch( element.nodeName.toLowerCase() ) {
 			case 'select':
-				return $("option:selected", element).length;
+				return $("option:sSelected", element).length;
 			case 'input':
 				if( this.checkable( element) )
 					return this.findByName(element.name).filter(':checked').length;

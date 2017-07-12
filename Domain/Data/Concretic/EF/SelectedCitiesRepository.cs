@@ -10,14 +10,21 @@ using System.Data.Entity;
 
 namespace Domain.Data.Concretic.EF
 {
-    public class ElectedCitiesRepository : BaseRepository<City>, ICitiesRepository
+    public class SelectedCitiesRepository : BaseRepository<SelectedCity>, ISelectedCitiesRepository
     {
-        public ElectedCitiesRepository()
+        public SelectedCitiesRepository()
         {
-            Items = _context.ElectedCities;
+            Items = _context.SelectedCities;
         }
 
-        public override void Update(City entity)
+        public void Remove(int id)
+        {
+            var item = Items.FirstOrDefault(c => c.Id == id);
+            if (item != null)
+                Remove(item);
+        }
+
+        public override void Update(SelectedCity entity)
         {
             var item = Items.FirstOrDefault(e => e.Id == entity.Id);
 
@@ -32,8 +39,8 @@ namespace Domain.Data.Concretic.EF
                 item.Name = entity.Name;
 
                 _context.Entry(item).State = EntityState.Modified;
-                _context.SaveChanges();
             }
+            _context.SaveChanges();
         }
     }
 }

@@ -15,6 +15,11 @@ namespace Domain.Data.Concretic.EF
             Items = _context.Queries;
         }
 
+        public IEnumerable<ForecastQueryInfo> GetByCityId(int id)
+        {
+            return Items.Where(q => q.City.Id == id);
+        }
+
         public override void Update(ForecastQueryInfo entity)
         {
             var item = Items.FirstOrDefault(e => e.Id == entity.Id);

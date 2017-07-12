@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstraction\ICitiesService.cs" />
     <Compile Include="Abstraction\IForecastConverter.cs" />
     <Compile Include="Abstraction\IWeatherService.cs" />
+    <Compile Include="Concretic\OpenWeatherCitiesService.cs" />
     <Compile Include="Concretic\OpenWeatherService.cs" />
     <Compile Include="Concretic\OpenWeatherForecastConverter.cs" />
+    <Compile Include="ForecastQueryLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

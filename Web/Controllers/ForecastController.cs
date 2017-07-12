@@ -5,22 +5,26 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 
 using Services.Abstraction;
-using Services.Concretic;
+using Services;
+using Domain.Data.Abstraction;
 
 namespace Web.Controllers
 {
     public class ForecastController : Controller
     {
-        public ForecastController(IWeatherService weatherService)
+        public ForecastController(IWeatherService weatherService, IQueriesRepository queries)
         {
             _weatherService = weatherService;
+            _forecastQueriesLogger = new ForecastQueryLogger(queries);
         }
 
         public ActionResult Hourly(string city)
         {
             try
             {
-                return View(_weatherService.MediumForecast(city));
+                var forecast = _weatherService.MediumForecast(city);
+                _forecastQueriesLogger.SaveQuery(forecast);
+                return View(forecast);
             }
             catch(Exception ex)
             {
@@ -31,8 +35,10 @@ namespace Web.Controllers
         public ActionResult Daily(string city)
         {
             try
-            { 
-                return View(_weatherService.LongForecast(city));
+            {
+                var forecast = _weatherService.LongForecast(city);
+                _forecastQueriesLogger.SaveQuery(forecast);
+                return View(forecast);
             }
             catch (Exception ex)
             {
@@ -43,8 +49,10 @@ namespace Web.Controllers
         public ActionResult Weather(string city)
         {
             try
-            { 
-                return View(_weatherService.CurrentWeather(city));
+            {
+                var forecast = _weatherService.CurrentWeather(city);
+                _forecastQueriesLogger.SaveQuery(forecast);
+                return View(forecast);
             }
             catch (Exception ex)
             {
@@ -53,5 +61,6 @@ namespace Web.Controllers
         }
 
         private IWeatherService _weatherService;
+        private ForecastQueryLogger _forecastQueriesLogger;
     }
 }
