@@ -24,7 +24,7 @@ namespace Domain.Data.Concretic.EF
                 Remove(item);
         }
 
-        public override void Update(SelectedCity entity)
+        public override void AddOrUpdate(SelectedCity entity)
         {
             var item = Items.FirstOrDefault(e => e.Id == entity.Id);
 

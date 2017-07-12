@@ -31,7 +31,7 @@ namespace Web.Controllers
             try
             {
                 var city = new SelectedCity(_citiesService.GetCityByName(cityName));
-                _selectedCities.Add(city);
+                _selectedCities.AddOrUpdate(city);
                 return RedirectToAction("Index");
             }
             catch(Exception ex)

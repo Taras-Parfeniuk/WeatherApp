@@ -12,7 +12,7 @@ namespace Domain.Data.Concretic.EF
     {
         public QueriesRepository()
         {
-            Items = _context.Queries;
+            Items = _context.Set<ForecastQueryInfo>();
         }
 
         public IEnumerable<ForecastQueryInfo> GetByCityId(int id)
@@ -20,7 +20,18 @@ namespace Domain.Data.Concretic.EF
             return Items.Where(q => q.City.Id == id);
         }
 
-        public override void Update(ForecastQueryInfo entity)
+        public IEnumerable<ForecastQueryInfo> GetByCityName(string name)
+        {
+            return Items.Where(q => q.City.Name == name);
+        }
+
+        public override List<ForecastQueryInfo> GetAll()
+        {
+            _context.Forecasts.Load();
+            return base.GetAll();
+        }
+
+        public override void AddOrUpdate(ForecastQueryInfo entity)
         {
             var item = Items.FirstOrDefault(e => e.Id == entity.Id);
 
@@ -35,8 +46,8 @@ namespace Domain.Data.Concretic.EF
                 item.QueryTime = entity.QueryTime;
 
                 _context.Entry(item).State = EntityState.Modified;
-                _context.SaveChanges();
             }
+            _context.SaveChanges();
         }
     }
 }

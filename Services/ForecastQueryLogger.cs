@@ -25,7 +25,7 @@ namespace Services
 
         public void SaveQuery(ICurrentWeather forecast)
         {
-            _queriesRepository.Add(new ForecastQueryInfo(forecast));
+            _queriesRepository.AddOrUpdate(new ForecastQueryInfo(forecast));
         }
 
         public IEnumerable<ForecastQueryInfo> GetAllQueries()

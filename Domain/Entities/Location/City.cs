@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Abstraction;
+using System.Collections.Generic;
 
 namespace Domain.Entities.Location
 {
@@ -8,5 +9,7 @@ namespace Domain.Entities.Location
         public string Name { get; set; }
         public string Country { get; set; }
         public Coordinates Coordinates { get; set; }
+
+        public City() { }
     }
 }

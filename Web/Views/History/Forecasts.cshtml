@@ -1,0 +1,50 @@
+﻿@model ForecastQueryInfo
+@{
+    ViewBag.Title = "Forecasts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row text-center">
+	<div class="col-lg-4 col-lg-offset-4">
+		<h2>@Model.City.Name, @Model.City.Country</h2>
+	</div>
+</div>
+
+<div class="col-lg-offset-3 col-lg-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="container text-center">
+				<div class="row">
+					<div class="col-lg-2">
+						Forecast time
+					</div>
+					<div class="col-lg-3">
+						Weather
+					</div>
+					<div class="col-lg-3">
+						Temperature
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="container text-center">
+				@foreach (var f in Model.Forecasts)
+				{
+					<div class="row">
+						<div class="col-lg-3">
+							@f.ForecastTime
+						</div>
+						<div class="col-lg-3">
+							@f.Weather
+						</div>
+						<div class="col-lg-3">
+							@f.MinTemperature - @f.MaxTemperature
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -16,6 +16,8 @@ namespace Domain.Entities
         public double? MaxTemperature { get; set; }
         public DateTime ForecastTime { get; set; }
 
+        public Guid QueryId { get; set; }
+
         public StoredForecast(IForecast forecast)
         {
             Id = Guid.NewGuid();
@@ -24,5 +26,7 @@ namespace Domain.Entities
             MaxTemperature = forecast.MaxTemperature;
             ForecastTime = forecast.ForecastTime;
         }
+
+        public StoredForecast() { }
     }
 }

@@ -14,7 +14,6 @@ namespace Domain.Data.Concretic.EF
 {
     public class WeatherDbContext : DbContext
     {
-        public DbSet<City> Cities { get; set; }
         public DbSet<SelectedCity> SelectedCities { get; set; }
         public DbSet<StoredForecast> Forecasts { get; set; }
         public DbSet<ForecastQueryInfo> Queries { get; set; }
@@ -30,6 +29,29 @@ namespace Domain.Data.Concretic.EF
                     m.MapInheritedProperties();
                     m.ToTable("SelectedCities");
                 });
+
+            modelBuilder.Entity<ForecastQueryInfo>()
+                .Property(q => q.City.Id)
+                .HasColumnName("CityId");
+
+            modelBuilder.Entity<ForecastQueryInfo>()
+                .Property(q => q.City.Name)
+                .HasColumnName("CityName");
+
+            modelBuilder.Entity<ForecastQueryInfo>()
+                .Property(q => q.City.Country)
+                .HasColumnName("CityCountry");
+
+            modelBuilder.Entity<ForecastQueryInfo>()
+                .Property(q => q.City.Coordinates.Latitude)
+                .HasColumnName("CityLatitude");
+
+            modelBuilder.Entity<ForecastQueryInfo>()
+                .Property(q => q.City.Coordinates.Longitude)
+                .HasColumnName("CityLongitude");
+
+            modelBuilder.Entity<ForecastQueryInfo>()
+                .HasMany(q => q.Forecasts);
         }
     }
 }

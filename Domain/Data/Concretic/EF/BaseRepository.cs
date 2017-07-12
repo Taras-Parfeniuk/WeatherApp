@@ -23,7 +23,7 @@ namespace Domain.Data.Concretic.EF
             _context.SaveChanges();
         }
 
-        public virtual void Update(TEntity entity) { }
+        public virtual void AddOrUpdate(TEntity entity) { }
 
         public virtual List<TEntity> GetAll()
         {

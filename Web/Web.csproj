@@ -223,11 +223,12 @@
     <Content Include="Views\Forecast\Hourly.cshtml" />
     <Content Include="Views\Forecast\Weather.cshtml" />
     <Content Include="Views\SelectedCities\Index.cshtml" />
+    <Content Include="Views\History\Queries.cshtml" />
+    <Content Include="Views\History\Forecasts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\History\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

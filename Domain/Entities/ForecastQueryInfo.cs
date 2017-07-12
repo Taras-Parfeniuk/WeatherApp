@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Domain.Entities.Abstraction;
 using Domain.Entities.Location;
 using Domain.Entities.Forecast;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
