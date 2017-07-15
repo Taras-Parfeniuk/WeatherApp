@@ -32,10 +32,9 @@ namespace Web.Util
 
         private void AddBindings()
         {
-            _kernel.Bind<ISelectedCitiesRepository>().To<SelectedCitiesRepository>();
-            _kernel.Bind<IQueriesRepository>().To<QueriesRepository>();
             _kernel.Bind<IWeatherService>().To<OpenWeatherService>();
             _kernel.Bind<ICitiesService>().To<OpenWeatherCitiesService>();
+            _kernel.Bind<IHistoryService>().To<HistoryService>();
         }
 
         private IKernel _kernel;

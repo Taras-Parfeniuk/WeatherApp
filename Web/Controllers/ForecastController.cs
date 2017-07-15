@@ -2,17 +2,15 @@ using System;
 using System.Web.Mvc;
 
 using Services.Abstraction;
-using Services;
-using Domain.Data.Abstraction;
 
 namespace Web.Controllers
 {
     public class ForecastController : Controller
     {
-        public ForecastController(IWeatherService weatherService, IQueriesRepository queries)
+        public ForecastController(IWeatherService weatherService, IHistoryService historyService)
         {
             _weatherService = weatherService;
-            _forecastQueriesLogger = new ForecastQueryLogger(queries);
+            _historyService = historyService;
         }
 
         public ActionResult Hourly(string city)
@@ -20,7 +18,7 @@ namespace Web.Controllers
             try
             {
                 var forecast = _weatherService.MediumForecast(city);
-                _forecastQueriesLogger.SaveQuery(forecast);
+                _historyService.AddToHistory(forecast);
                 return View(forecast);
             }
             catch(Exception ex)
@@ -34,7 +32,7 @@ namespace Web.Controllers
             try
             {
                 var forecast = _weatherService.LongForecast(city);
-                _forecastQueriesLogger.SaveQuery(forecast);
+                _historyService.AddToHistory(forecast);
                 return View(forecast);
             }
             catch (Exception ex)
@@ -48,7 +46,7 @@ namespace Web.Controllers
             try
             {
                 var forecast = _weatherService.CurrentWeather(city);
-                _forecastQueriesLogger.SaveQuery(forecast);
+                _historyService.AddToHistory(forecast);
                 return View(forecast);
             }
             catch (Exception ex)
@@ -58,6 +56,6 @@ namespace Web.Controllers
         }
 
         private IWeatherService _weatherService;
-        private ForecastQueryLogger _forecastQueriesLogger;
+        private IHistoryService _historyService;
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model ForecastQueryInfo
 @{
-    ViewBag.Title = "Forecasts";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Forecasts";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row text-center">
@@ -36,7 +36,7 @@
 							@f.ForecastTime
 						</div>
 						<div class="col-lg-3">
-							@f.Weather
+							@f.WeatherState, @f.WeatherDescription
 						</div>
 						<div class="col-lg-3">
 							@f.MinTemperature - @f.MaxTemperature

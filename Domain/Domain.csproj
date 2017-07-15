@@ -51,36 +51,70 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Abstraction\IHistoryRepository.cs" />
     <Compile Include="Data\Abstraction\ISelectedCitiesRepository.cs" />
-    <Compile Include="Data\Abstraction\IQueriesRepository.cs" />
     <Compile Include="Data\Abstraction\IRepository.cs" />
     <Compile Include="Data\Concretic\EF\BaseRepository.cs" />
+    <Compile Include="Data\Concretic\EF\HistoryRepository.cs" />
     <Compile Include="Data\Concretic\EF\SelectedCitiesRepository.cs" />
-    <Compile Include="Data\Concretic\EF\QueriesRepository.cs" />
     <Compile Include="Data\Concretic\EF\WeatherDbContext.cs" />
+    <Compile Include="Entities\Abstraction\IBaseForecast.cs" />
     <Compile Include="Entities\Abstraction\ICurrentWeather.cs" />
-    <Compile Include="Entities\Abstraction\IForecast.cs" />
-    <Compile Include="Entities\Abstraction\ILocation.cs" />
+    <Compile Include="Entities\Abstraction\IDayForecast.cs" />
     <Compile Include="Entities\Abstraction\ILongForecast.cs" />
     <Compile Include="Entities\Abstraction\IMediumForecast.cs" />
-    <Compile Include="Entities\ForecastQueryInfo.cs" />
-    <Compile Include="Entities\Forecast\CurrentDayForecast.cs" />
-    <Compile Include="Entities\Forecast\DayForecast.cs" />
-    <Compile Include="Entities\Forecast\FiveDaysForecast.cs" />
-    <Compile Include="Entities\Forecast\SixteenDaysForecast.cs" />
-    <Compile Include="Entities\StoredForecast.cs" />
-    <Compile Include="Entities\Location\City.cs" />
-    <Compile Include="Entities\Location\Coordinates.cs" />
-    <Compile Include="Entities\Location\SelectedCity.cs" />
-    <Compile Include="Entities\Weather\Measurements.cs" />
-    <Compile Include="Entities\Weather\Precipitation.cs" />
-    <Compile Include="Entities\Weather\WeatherState.cs" />
-    <Compile Include="Entities\Weather\Wind.cs" />
+    <Compile Include="Entities\Concretic\BaseForecast.cs" />
+    <Compile Include="Entities\Concretic\DayForecast.cs" />
+    <Compile Include="Entities\Concretic\Forecast.cs" />
+    <Compile Include="Entities\Concretic\ForecastQueryInfo.cs" />
+    <Compile Include="Entities\Concretic\CurrentDayForecast.cs" />
+    <Compile Include="Entities\Concretic\FiveDaysForecast.cs" />
+    <Compile Include="Entities\Concretic\HistoryEntry.cs" />
+    <Compile Include="Entities\Concretic\SixteenDaysForecast.cs" />
+    <Compile Include="Entities\Concretic\City.cs" />
+    <Compile Include="Migrations\201707121336426_InitialCreate.cs" />
+    <Compile Include="Migrations\201707121336426_InitialCreate.Designer.cs">
+      <DependentUpon>201707121336426_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707150007196_refactorMigration.cs" />
+    <Compile Include="Migrations\201707150007196_refactorMigration.Designer.cs">
+      <DependentUpon>201707150007196_refactorMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707150031331_editDateTimeTypes.cs" />
+    <Compile Include="Migrations\201707150031331_editDateTimeTypes.Designer.cs">
+      <DependentUpon>201707150031331_editDateTimeTypes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707150120380_renameCitiesTable.cs" />
+    <Compile Include="Migrations\201707150120380_renameCitiesTable.Designer.cs">
+      <DependentUpon>201707150120380_renameCitiesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707150128581_editCitiesTable.cs" />
+    <Compile Include="Migrations\201707150128581_editCitiesTable.Designer.cs">
+      <DependentUpon>201707150128581_editCitiesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201707121336426_InitialCreate.resx">
+      <DependentUpon>201707121336426_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707150007196_refactorMigration.resx">
+      <DependentUpon>201707150007196_refactorMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707150031331_editDateTimeTypes.resx">
+      <DependentUpon>201707150031331_editDateTimeTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707150120380_renameCitiesTable.resx">
+      <DependentUpon>201707150120380_renameCitiesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707150128581_editCitiesTable.resx">
+      <DependentUpon>201707150128581_editCitiesTable.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

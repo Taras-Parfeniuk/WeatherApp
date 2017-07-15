@@ -1,28 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 using Services.Abstraction;
-using Domain.Data.Abstraction;
-using Domain.Entities.Location;
+
 
 namespace Web.Controllers
 {
     public class SelectedCitiesController : Controller
     {
-        public SelectedCitiesController(ICitiesService citiesService, ISelectedCitiesRepository selectedCities)
+        public SelectedCitiesController(ICitiesService citiesService)
         {
             _citiesService = citiesService;
-            _selectedCities = selectedCities;
         }
 
         // GET: SelectedCities
         [HttpGet]
         public ActionResult Index()
         {
-            return View(_selectedCities.GetAll());
+            return View(_citiesService.GetSelected());
         }
 
         [HttpPost]
@@ -30,8 +25,7 @@ namespace Web.Controllers
         {
             try
             {
-                var city = new SelectedCity(_citiesService.GetCityByName(cityName));
-                _selectedCities.AddOrUpdate(city);
+                _citiesService.AddToSelected(_citiesService.GetCityByName(cityName));
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -44,7 +38,7 @@ namespace Web.Controllers
         {
             try
             {
-                _selectedCities.Remove(cityId);
+                _citiesService.RemoveFromSelected(_citiesService.GetCityById(cityId));
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -54,6 +48,5 @@ namespace Web.Controllers
         }
 
         private ICitiesService _citiesService;
-        ISelectedCitiesRepository _selectedCities;
     }
 }

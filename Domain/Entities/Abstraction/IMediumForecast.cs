@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+
+using Domain.Entities.Concretic;
 
 namespace Domain.Entities.Abstraction
 {
     public interface IMediumForecast
     {
-        Guid Id { get; set; }
-
-        ILocation City { get; set; }
-        List<IForecast> HourForecasts { get; set; }
+        City City { get; set; }
+        List<IBaseForecast> HourForecasts { get; set; }
     }
 }

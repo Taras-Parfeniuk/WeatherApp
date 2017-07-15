@@ -1,4 +1,3 @@
-@using Domain.Entities.Abstraction;
 @model IMediumForecast
 @{
 	ViewData["Title"] = $"Hourly forecast in {Model.City.Name}";
@@ -33,7 +32,7 @@
 	<div class="col-lg-12">
 		<div class="container">
 			@{
-				var todayHours = new List<IForecast>();
+				var todayHours = new List<IBaseForecast>();
 
 				if (Model.HourForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
 				{
@@ -48,7 +47,7 @@
 
 								foreach (var h in todayHours)
 								{
-									var weatherIco = $"/Content/images/icon/{h.Weather.Icon}.svg";
+									var weatherIco = $"/Content/images/icon/{h.WeatherIcon}.svg";
 
 									<div class="row">
 										<div class="col-lg-2">
@@ -59,7 +58,7 @@
 												<img src=@weatherIco />
 											</div>
 											<div class="row">
-												@h.Weather.Description
+												@h.WeatherDescription
 											</div>
 										</div>
 										<div class="col-lg-2">
@@ -75,7 +74,7 @@
 												<h4>Wind speed:</h4>
 											</div>
 											<div class="row">
-												@h.Wind.Speed m/s
+												@h.WindSpeed m/s
 											</div>
 										</div>
 										<div class="col-lg-2">
@@ -83,7 +82,7 @@
 												<h4>Pressure:</h4>
 											</div>
 											<div class="row">
-												@h.MainMeathurements.DefaultPressure
+												@h.DefaultPressure
 											</div>
 										</div>
 										<div class="col-lg-2">
@@ -91,7 +90,7 @@
 												<h4>Humidity:</h4>
 											</div>
 											<div class="row">
-												@h.MainMeathurements.Humidity
+												@h.Humidity
 											</div>
 										</div>
 									</div>
@@ -102,7 +101,7 @@
 					</div>
 								}
 
-								var hours = new List<IForecast>();
+								var hours = new List<IBaseForecast>();
 								hours = Model.HourForecasts.Skip(todayHours.Count()).ToList();
 			}
 
@@ -113,7 +112,7 @@
 						<h3>@hours.First().ForecastTime.DayOfWeek</h3>
 					</div>
 					@{
-						var dayHours = new List<IForecast>();
+						var dayHours = new List<IBaseForecast>();
 						var nextDayStartId = hours.FindIndex(1, h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
 						var dayStart = nextDayStartId > 0 ? hours[nextDayStartId] : null;
 
@@ -132,7 +131,7 @@
 
 						@foreach (var h in dayHours)
 						{
-							var weatherIco = $"/Content/images/icon/{h.Weather.Icon}.svg";
+							var weatherIco = $"/Content/images/icon/{h.WeatherIcon}.svg";
 
 							<div class="row">
 								<div class="col-lg-2">
@@ -143,7 +142,7 @@
 										<img src=@weatherIco />
 									</div>
 									<div class="row">
-										@h.Weather.Description
+										@h.WeatherDescription
 									</div>
 								</div>
 								<div class="col-lg-2">
@@ -159,7 +158,7 @@
 										<h4>Wind speed:</h4>
 									</div>
 									<div class="row">
-										@h.Wind.Speed m/s
+										@h.WindSpeed m/s
 									</div>
 								</div>
 								<div class="col-lg-2">
@@ -167,7 +166,7 @@
 										<h4>Pressure:</h4>
 									</div>
 									<div class="row">
-										@h.MainMeathurements.DefaultPressure
+										@h.DefaultPressure
 									</div>
 								</div>
 								<div class="col-lg-2">
@@ -175,7 +174,7 @@
 										<h4>Humidity:</h4>
 									</div>
 									<div class="row">
-										@h.MainMeathurements.Humidity
+										@h.Humidity
 									</div>
 								</div>
 							</div>
