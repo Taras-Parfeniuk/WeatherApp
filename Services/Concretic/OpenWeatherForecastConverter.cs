@@ -131,8 +131,8 @@ namespace Services.Concretic
                 WeatherState = (string)jObject["weather"][0]["main"],
                 WeatherDescription = (string)jObject["weather"][0]["description"],
 
-                MinTemperature = (double?)jObject["temp"]["temp_min"],
-                MaxTemperature = (double?)jObject["temp"]["temp_max"],
+                MinTemperature = (double?)jObject["temp"]["min"],
+                MaxTemperature = (double?)jObject["temp"]["max"],
                 DayTemperature = (double?)jObject["temp"]["day"],
                 EveningTemperature = (double?)jObject["temp"]["eve"],
                 MorningTemperature = (double?)jObject["temp"]["morn"]    

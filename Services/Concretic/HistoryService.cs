@@ -21,7 +21,7 @@ namespace Services.Concretic
             _historyRepository = _kernel.Get<IHistoryRepository>();
         }
 
-        public void AddToHistory(IMediumForecast forecast)
+        public Guid AddToHistory(IMediumForecast forecast)
         {
             HistoryEntry entry = new HistoryEntry()
             {
@@ -32,9 +32,10 @@ namespace Services.Concretic
             };
 
             _historyRepository.AddOrUpdate(entry);
+            return entry.Id;
         }
 
-        public void AddToHistory(ICurrentWeather forecast)
+        public Guid AddToHistory(ICurrentWeather forecast)
         {
             HistoryEntry entry = new HistoryEntry()
             {
@@ -44,9 +45,10 @@ namespace Services.Concretic
                 Time = DateTime.Now
             };
             _historyRepository.AddOrUpdate(entry);
+            return entry.Id;
         }
 
-        public void AddToHistory(ILongForecast forecast)
+        public Guid AddToHistory(ILongForecast forecast)
         {
             HistoryEntry entry = new HistoryEntry()
             {
@@ -57,6 +59,7 @@ namespace Services.Concretic
             };
 
             _historyRepository.AddOrUpdate(entry);
+            return entry.Id;
         }
 
         public List<ForecastQueryInfo> GetHistory()

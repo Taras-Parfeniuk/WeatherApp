@@ -8,9 +8,9 @@ namespace Services.Abstraction
 {
     public interface IHistoryService
     {
-        void AddToHistory(ILongForecast forecast);
-        void AddToHistory(IMediumForecast forecast);
-        void AddToHistory(ICurrentWeather forecast);
+        Guid AddToHistory(ILongForecast forecast);
+        Guid AddToHistory(IMediumForecast forecast);
+        Guid AddToHistory(ICurrentWeather forecast);
         List<ForecastQueryInfo> GetHistory();
         List<ForecastQueryInfo> GetHistoryByCity(string cityName);
         List<ForecastQueryInfo> GetHistoryByCity(City city);

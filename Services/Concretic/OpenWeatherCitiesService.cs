@@ -62,7 +62,7 @@ namespace Services.Concretic
 
         public void AddToSelected(City city)
         {
-            _selectedCities.Add(city);
+            _selectedCities.AddOrUpdate(city);
         }
 
         public List<City> GetSelected()
