@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Domain.Entities.Location;
+﻿using Domain.Entities.Concretic;
 
 namespace Domain.Data.Abstraction
 {
-    public interface ISelectedCitiesRepository : IRepository<SelectedCity>
+    public interface ISelectedCitiesRepository : IRepository<City>
     {
         void Remove(int id);
-        
     }
 }

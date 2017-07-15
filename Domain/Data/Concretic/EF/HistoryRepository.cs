@@ -4,34 +4,29 @@ using System.Data.Entity;
 using System.Linq;
 
 using Domain.Data.Abstraction;
-using Domain.Entities;
+using Domain.Entities.Concretic;
 
 namespace Domain.Data.Concretic.EF
 {
-    public class QueriesRepository : BaseRepository<ForecastQueryInfo>, IQueriesRepository
+    public class HistoryRepository : BaseRepository<HistoryEntry>, IHistoryRepository
     {
-        public QueriesRepository()
+        public HistoryRepository()
         {
-            Items = _context.Set<ForecastQueryInfo>();
+            Items = _context.Set<HistoryEntry>();
         }
 
-        public IEnumerable<ForecastQueryInfo> GetByCityId(int id)
+        public IEnumerable<HistoryEntry> GetByCityId(int id)
         {
-            return Items.Where(q => q.City.Id == id);
+            return Items.Where(q => q.CityId == id);
         }
 
-        public IEnumerable<ForecastQueryInfo> GetByCityName(string name)
-        {
-            return Items.Where(q => q.City.Name == name);
-        }
-
-        public override List<ForecastQueryInfo> GetAll()
+        public override List<HistoryEntry> GetAll()
         {
             _context.Forecasts.Load();
             return base.GetAll();
         }
 
-        public override void AddOrUpdate(ForecastQueryInfo entity)
+        public override void AddOrUpdate(HistoryEntry entity)
         {
             var item = Items.FirstOrDefault(e => e.Id == entity.Id);
 
@@ -41,13 +36,19 @@ namespace Domain.Data.Concretic.EF
             }
             else
             {
-                item.City = entity.City;
+                item.CityId = entity.CityId;
                 item.Forecasts = entity.Forecasts;
-                item.QueryTime = entity.QueryTime;
+                item.Time = entity.Time;
 
                 _context.Entry(item).State = EntityState.Modified;
             }
             _context.SaveChanges();
+        }
+
+        public HistoryEntry GetById(Guid id)
+        {
+            _context.Forecasts.Load();
+            return Items.FirstOrDefault(e => e.Id == id);
         }
     }
 }

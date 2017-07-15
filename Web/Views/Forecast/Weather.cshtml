@@ -1,5 +1,5 @@
 
-@model Domain.Entities.Abstraction.ICurrentWeather
+@model ICurrentWeather
 @{
 	ViewData["Title"] = $"Current Weather in {Model.City.Name}";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -39,16 +39,16 @@
 						<div class="row">
 							<div class="col-lg-4">
 								@{ 
-									var weatherIco = $"/Content/images/icon/{Model.Weather.Icon}.svg";
+									var weatherIco = $"/Content/images/icon/{Model.WeatherIcon}.svg";
 								}
 								<img src=@weatherIco />
 							</div>
 							<div class="col-lg-3">
 								<div class="row">
-									<h4>@Model.Weather.Main, @Model.MinTemperature C- @Model.MaxTemperature C</h4>
+									<h4>@Model.WeatherState, @Model.MinTemperature C- @Model.MaxTemperature C</h4>
 								</div>
 								<div class="row">
-									<p>@Model.Weather.Description</p>
+									<p>@Model.WeatherDescription</p>
 								</div>
 							</div>
 							
@@ -78,13 +78,13 @@
 							</div>
 							<div class="col-lg-3">
 								<div class="row">
-									<h5>Wind Speed: @Model.Wind.Speed</h5>
+									<h5>Wind Speed: @Model.WindSpeed m/s</h5>
 								</div>
 								<div class="row">
-									<h5>Humidity: @Model.MainMeathurements.Humidity</h5>
+									<h5>Humidity: @Model.Humidity</h5>
 								</div>
 								<div class="row">
-									<h5>Pressure: @Model.MainMeathurements.DefaultPressure</h5>
+									<h5>Pressure: @Model.DefaultPressure</h5>
 								</div>
 							</div>
 						</div>

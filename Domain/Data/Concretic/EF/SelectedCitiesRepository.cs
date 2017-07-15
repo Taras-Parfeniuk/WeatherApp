@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Domain.Entities.Location;
+using Domain.Entities.Concretic;
 using Domain.Data.Abstraction;
 using System.Data.Entity;
 
 namespace Domain.Data.Concretic.EF
 {
-    public class SelectedCitiesRepository : BaseRepository<SelectedCity>, ISelectedCitiesRepository
+    public class SelectedCitiesRepository : BaseRepository<City>, ISelectedCitiesRepository
     {
         public SelectedCitiesRepository()
         {
@@ -21,10 +21,22 @@ namespace Domain.Data.Concretic.EF
         {
             var item = Items.FirstOrDefault(c => c.Id == id);
             if (item != null)
+            {
                 Remove(item);
+            }
         }
 
-        public override void AddOrUpdate(SelectedCity entity)
+        public override void Remove(City entity)
+        {
+            var item = Items.FirstOrDefault(c => c.Id == entity.Id);
+            if (item != null)
+            {
+                Items.Remove(item);
+                _context.SaveChanges();
+            }
+        }
+
+        public override void AddOrUpdate(City entity)
         {
             var item = Items.FirstOrDefault(e => e.Id == entity.Id);
 
@@ -34,7 +46,6 @@ namespace Domain.Data.Concretic.EF
             }
             else
             {
-                item.Coordinates = entity.Coordinates;
                 item.Country = entity.Country;
                 item.Name = entity.Name;
 

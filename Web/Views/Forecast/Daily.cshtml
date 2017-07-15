@@ -35,7 +35,7 @@
 	@{
 		foreach (var d in Model.DayForecasts)
 		{
-			var weatherIco = $"/Content/images/icon/{d.Weather.Icon}.svg";
+			var weatherIco = $"/Content/images/icon/{d.WeatherIcon}.svg";
 
 			<div class="container">
 				<div class="panel panel-default">
@@ -46,7 +46,7 @@
 						<div class="container">
 							<div class="row">
 								<img src=@weatherIco />
-								@d.Weather.Description
+								@d.WeatherDescription
 							</div>
 						</div>
 					</div>
@@ -69,10 +69,10 @@
 							<hr/>
 							<div class="row">
 								<div class="col-lg-offset-3 col-lg-3">
-									Wind: @d.Wind.Speed m/s
+									Wind: @d.WindSpeed m/s
 								</div>
 								<div class="col-lg-offset-3 col-lg-3">
-									Humidity: @d.MainMeathurements.Humidity
+									Humidity: @d.Humidity
 								</div>
 							</div>
 						</div>

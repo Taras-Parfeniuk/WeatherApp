@@ -4,16 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using Domain.Data.Abstraction;
-using Domain.Entities;
+using Domain.Entities.Concretic;
+using Services.Abstraction;
 
 namespace Web.Controllers
 {
     public class HistoryController : Controller
     {
-        public HistoryController(IQueriesRepository queries)
+        public HistoryController(IHistoryService historyService)
         {
-            _queries = queries;
+            _historyService = historyService;
         }
 
         // GET: History
@@ -21,16 +21,16 @@ namespace Web.Controllers
         {
             List<ForecastQueryInfo> queries = 
                 cityName != string.Empty && cityName != null
-                ? queries = _queries.GetByCityName(cityName).ToList() 
-                : _queries.GetAll();
+                ? queries = _historyService.GetHistoryByCity(cityName).ToList() 
+                : _historyService.GetHistory();
             return View(queries);
         }
 
         public ActionResult Forecasts(Guid queryId)
         {
-            return View(_queries.GetAll().Where(q => q.Id == queryId).FirstOrDefault());
+            return View(_historyService.GetEntryById(queryId));
         }
 
-        private IQueriesRepository _queries;
+        private IHistoryService _historyService;
     }
 }

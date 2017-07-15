@@ -1,57 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 
-using Domain.Entities.Location;
-using Domain.Entities.Forecast;
-using Domain.Entities;
+using Domain.Entities.Concretic;
 
 namespace Domain.Data.Concretic.EF
 {
     public class WeatherDbContext : DbContext
     {
-        public DbSet<SelectedCity> SelectedCities { get; set; }
-        public DbSet<StoredForecast> Forecasts { get; set; }
-        public DbSet<ForecastQueryInfo> Queries { get; set; }
+        public DbSet<City> SelectedCities { get; set; }
+        public DbSet<Forecast> Forecasts { get; set; }
+        public DbSet<HistoryEntry> History { get; set; }
 
-        public WeatherDbContext() : base("WeatherDbContext")
-        {        }
+        public WeatherDbContext() : base("WeatherDbContext") { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SelectedCity>()
-                .Map(m =>
-                {
-                    m.MapInheritedProperties();
-                    m.ToTable("SelectedCities");
-                });
+            modelBuilder.Entity<HistoryEntry>().
+                Property(e => e.Time)
+                .HasColumnType("datetime2");
 
-            modelBuilder.Entity<ForecastQueryInfo>()
-                .Property(q => q.City.Id)
-                .HasColumnName("CityId");
+            modelBuilder.Entity<Forecast>()
+                .Property(f => f.ForecastTime)
+                .HasColumnType("datetime2");
 
-            modelBuilder.Entity<ForecastQueryInfo>()
-                .Property(q => q.City.Name)
-                .HasColumnName("CityName");
+            modelBuilder.Entity<Forecast>()
+                .Property(f => f.Sunrise)
+                .HasColumnType("datetime2");
 
-            modelBuilder.Entity<ForecastQueryInfo>()
-                .Property(q => q.City.Country)
-                .HasColumnName("CityCountry");
+            modelBuilder.Entity<Forecast>()
+                .Property(f => f.Sunset)
+                .HasColumnType("datetime2");
 
-            modelBuilder.Entity<ForecastQueryInfo>()
-                .Property(q => q.City.Coordinates.Latitude)
-                .HasColumnName("CityLatitude");
-
-            modelBuilder.Entity<ForecastQueryInfo>()
-                .Property(q => q.City.Coordinates.Longitude)
-                .HasColumnName("CityLongitude");
-
-            modelBuilder.Entity<ForecastQueryInfo>()
-                .HasMany(q => q.Forecasts);
+            modelBuilder.Entity<City>().ToTable("SelectedCities");
         }
     }
 }

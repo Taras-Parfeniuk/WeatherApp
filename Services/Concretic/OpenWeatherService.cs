@@ -7,12 +7,11 @@ using Services.Abstraction;
 
 namespace Services.Concretic
 {
-    public class OpenWeatherService : IWeatherService
+    public class OpenWeatherService : BaseOpenWeatherService, IWeatherService
     { 
-        public OpenWeatherService()
+        public OpenWeatherService() : base()
         {
             _longForecastLenght = 7;
-            _responseConverter = new OpenWeatherForecastConverter();
         }
 
         public IMediumForecast MediumForecast(string city)
@@ -81,8 +80,5 @@ namespace Services.Concretic
         }
 
         private int _longForecastLenght;
-        private const string _APIKEY = "9e37cc806b43d7a7425387e673677959";
-        private IForecastConverter _responseConverter;
-
     }
 }

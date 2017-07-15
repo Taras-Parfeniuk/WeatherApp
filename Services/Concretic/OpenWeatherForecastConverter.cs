@@ -5,9 +5,7 @@ using Newtonsoft.Json.Linq;
 
 using Services.Abstraction;
 using Domain.Entities.Abstraction;
-using Domain.Entities.Forecast;
-using Domain.Entities.Location;
-using Domain.Entities.Weather;
+using Domain.Entities.Concretic;
 
 namespace Services.Concretic
 {
@@ -24,34 +22,26 @@ namespace Services.Concretic
                     Id = (int)jObject["id"],
                     Name = (string)jObject["name"],
                     Country = (string)jObject["sys"]["country"],
-                    Coordinates = new Coordinates((double?)jObject["coord"]["lon"], (double?)jObject["coord"]["lat"]) 
                 },
+
+                DefaultPressure = (int?)jObject["main"]["pressure"],
+                Humidity = (int?)jObject["main"]["humidity"],
                 Cloudiness = (double?)jObject["clouds"]["all"],
-                Rain = new Precipitation((int?)jObject["rain"]?["3h"]),
-                Snow = new Precipitation((int?)jObject["snow"]?["3h"]),
-                MeathurementsTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
-                ForecastTime = DateTime.Now,
+                WindSpeed = (double?)jObject["wind"]["speed"],
+
                 MinTemperature = (double?)jObject["main"]["temp_min"],
                 MaxTemperature = (double?)jObject["main"]["temp_max"],
                 CurrentTemperature = (double?)jObject["main"]["temp"],
                 
-                Wind = new Wind((double?)jObject["wind"]["speed"], (int?)jObject["deg"]),
                 Sunrise = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunrise"]),
                 Sunset = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunset"]),
-                Weather = new WeatherState()
-                {
-                    Id = (int?)jObject["weather"][0]["id"],
-                    Description = (string)jObject["weather"][0]["description"],
-                    Main = (string)jObject["weather"][0]["main"],
-                    Icon = (string)jObject["weather"][0]["icon"]
-                },
-                MainMeathurements = new Measurements()
-                {
-                    DefaultPressure = (int?)jObject["main"]["pressure"],
-                    GroundLevelPressure = (int?)jObject["main"]["grnd_level"],
-                    SeaLevelPressure = (int?)jObject["main"]["sea_level"],
-                    Humidity = (int?)jObject["main"]["humidity"]
-                }
+
+                WeatherIcon = (string)jObject["weather"][0]["icon"],
+                WeatherState = (string)jObject["weather"][0]["main"],
+                WeatherDescription = (string)jObject["weather"][0]["description"],
+
+
+                ForecastTime = DateTime.Now
             };
         }
 
@@ -66,14 +56,13 @@ namespace Services.Concretic
                     Id = (int)jObject["city"]["id"],
                     Name = (string)jObject["city"]["name"],
                     Country = (string)jObject["city"]["country"],
-                    Coordinates = new Coordinates((double)jObject["city"]["coord"]["lon"], (double)jObject["city"]["coord"]["lat"])
                 },
-                HourForecasts = new List<IForecast>()
+                HourForecasts = new List<IBaseForecast>()
             };
 
             for (var i = 0; i < (int)jObject["cnt"]; i++)
             {
-                forecast.HourForecasts.Add(ToShortForecast((JObject)jObject["list"][i]));
+                forecast.HourForecasts.Add(ToBaseForecast((JObject)jObject["list"][i]));
             }
 
             return forecast;
@@ -90,9 +79,8 @@ namespace Services.Concretic
                     Id = (int)jObject["city"]["id"],
                     Name = (string)jObject["city"]["name"],
                     Country = (string)jObject["city"]["country"],
-                    Coordinates = new Coordinates((double)jObject["city"]["coord"]["lon"], (double)jObject["city"]["coord"]["lat"])
                 },
-                DayForecasts = new List<IForecast>()
+                DayForecasts = new List<IDayForecast>()
             };
             for (var i = 0; i < (int)jObject["cnt"]; i++)
             {
@@ -102,71 +90,56 @@ namespace Services.Concretic
             return forecast;
         }
 
-        public IForecast ToShortForecast(JObject jObject)
+        public IBaseForecast ToBaseForecast(JObject jObject)
         {
-            return new DayForecast()
+            return new BaseForecast
             {
+                DefaultPressure = (int?)jObject["main"]["pressure"],
+                Humidity = (int?)jObject["main"]["humidity"],
                 Cloudiness = (double?)jObject["clouds"]["all"],
-                Rain = new Precipitation((int?)jObject["rain"]?["3h"]),
-                Snow = new Precipitation((int?)jObject["snow"]?["3h"]),
-                Wind = new Wind((double?)jObject["wind"]["speed"], (int?)jObject["wind"]["deg"]),
+                WindSpeed = (double?)jObject["wind"]["speed"],
+
                 MinTemperature = (double?)jObject["main"]["temp_min"],
                 MaxTemperature = (double?)jObject["main"]["temp_max"],
-                Weather = new WeatherState()
-                {
-                    Id = (int?)jObject["weather"][0]["id"],
-                    Description = (string)jObject["weather"][0]["description"],
-                    Main = (string)jObject["weather"][0]["main"],
-                    Icon = (string)jObject["weather"][0]["icon"]
-                },
-                MainMeathurements = new Measurements()
-                {
-                    DefaultPressure = (int?)jObject["main"]["pressure"],
-                    GroundLevelPressure = (int?)jObject["main"]["grnd_level"],
-                    SeaLevelPressure = (int?)jObject["main"]["sea_level"],
-                    Humidity = (int?)jObject["main"]["humidity"]
-                },
+
+                WeatherIcon = (string)jObject["weather"][0]["icon"],
+                WeatherState = (string)jObject["weather"][0]["main"],
+                WeatherDescription = (string)jObject["weather"][0]["description"],
+
                 ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"])
             };
         }
 
-        public IForecast ToShortForecast(string json)
+        public IBaseForecast ToBaseForecast(string json)
         {
             var jObject = JObject.Parse(json);
 
-            return ToShortForecast(jObject);
+            return ToBaseForecast(jObject);
         }
 
-        public IForecast ToDayForecast(JObject jObject)
+        public IDayForecast ToDayForecast(JObject jObject)
         {
             return new DayForecast()
             {
+                Humidity = (int?)jObject["humidity"],
+                DefaultPressure = (int?)jObject["pressure"],
                 Cloudiness = (double?)jObject["clouds"],
                 ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
-                MeathurementsTime = DateTime.Today,
-                Wind = new Wind((double?)jObject["speed"], (int?)jObject["deg"]),
-                Weather = new WeatherState()
-                {
-                    Id = (int?)jObject["weather"][0]["id"],
-                    Description = (string)jObject["weather"][0]["description"],
-                    Main = (string)jObject["weather"][0]["main"],
-                    Icon = (string)jObject["weather"][0]["icon"]
-                },
+                WindSpeed = (double?)jObject["speed"],
+
+                WeatherIcon = (string)jObject["weather"][0]["icon"],
+                WeatherState = (string)jObject["weather"][0]["main"],
+                WeatherDescription = (string)jObject["weather"][0]["description"],
+
                 MinTemperature = (double?)jObject["temp"]["temp_min"],
                 MaxTemperature = (double?)jObject["temp"]["temp_max"],
                 DayTemperature = (double?)jObject["temp"]["day"],
                 EveningTemperature = (double?)jObject["temp"]["eve"],
-                MorningTemperature = (double?)jObject["temp"]["morn"],
-                
-                MainMeathurements = new Measurements()
-                {
-                    Humidity = (int?)jObject["humidity"],
-                    SeaLevelPressure = (int?)jObject["pressure"]
-                }
+                MorningTemperature = (double?)jObject["temp"]["morn"]    
             };
         }
 
-        public IForecast ToDayForecast(string json)
+        public IDayForecast ToDayForecast(string json)
         {
             var jObject = JObject.Parse(json);
 
