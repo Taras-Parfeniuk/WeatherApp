@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 
 using NUnit.Framework;
+using Ninject;
 
 using Domain.Entities.Concretic;
 using Services.Abstraction;
 using Services.Concretic;
+
+using Services.Util;
 
 namespace WeatherApp.Test.Services
 {
@@ -15,7 +18,8 @@ namespace WeatherApp.Test.Services
         public void GetCityByName_When_given_string_name_of_city_Then_return_correct_city_object()
         {
             // Arrange
-            ICitiesService citiesService = new OpenWeatherCitiesService();
+            IKernel kernel = new StandardKernel(new ServicesNinjectModule());
+            ICitiesService citiesService = kernel.Get<ICitiesService>();
             string cityName = "lviv";
             City expected = new City()
             {
@@ -37,7 +41,8 @@ namespace WeatherApp.Test.Services
         public void GetCityById_When_given_int_id_of_city_Then_return_correct_city_object()
         {
             // Arrange
-            ICitiesService citiesService = new OpenWeatherCitiesService();
+            IKernel kernel = new StandardKernel(new ServicesNinjectModule());
+            ICitiesService citiesService = kernel.Get<ICitiesService>();
             int cityId = 702550;
             City expected = new City()
             {
@@ -58,7 +63,8 @@ namespace WeatherApp.Test.Services
         [Test]
         public void AddToSelected_When_given_city_Then_Add_it_to_selected_cities_and_return_it()
         {
-            ICitiesService citiesService = new OpenWeatherCitiesService();
+            IKernel kernel = new StandardKernel(new ServicesNinjectModule());
+            ICitiesService citiesService = kernel.Get<ICitiesService>();
             City expected = new City()
             {
                 Id = 702550,
@@ -82,7 +88,8 @@ namespace WeatherApp.Test.Services
         [Test]
         public void RemoveFromSelected_When_given_city_add_it_to_selected_Then_remove_it()
         {
-            ICitiesService citiesService = new OpenWeatherCitiesService();
+            IKernel kernel = new StandardKernel(new ServicesNinjectModule());
+            ICitiesService citiesService = kernel.Get<ICitiesService>();
             City expected = new City()
             {
                 Id = 702550,

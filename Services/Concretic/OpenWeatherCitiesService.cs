@@ -15,26 +15,9 @@ namespace Services.Concretic
 {
     public class OpenWeatherCitiesService : BaseOpenWeatherService, ICitiesService
     {
-        public OpenWeatherCitiesService() : base()
-        {
-            _selectedCities = _kernel.Get<ISelectedCitiesRepository>();
-        }
-
         public OpenWeatherCitiesService(ISelectedCitiesRepository selectedCities) : base()
         {
             _selectedCities = selectedCities;
-        }
-
-        public OpenWeatherCitiesService(ISelectedCitiesRepository selectedCities, IForecastConverter converter)
-        {
-            _selectedCities = selectedCities;
-            _responseConverter = converter;
-        }
-
-        public OpenWeatherCitiesService(IForecastConverter converter) : base()
-        {
-            _selectedCities = _kernel.Get<ISelectedCitiesRepository>();
-            _responseConverter = converter;
         }
 
         public City GetCityByName(string name)
