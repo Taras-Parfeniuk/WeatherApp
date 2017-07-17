@@ -12,6 +12,8 @@ namespace Web.App_Start
     using Ninject;
     using Ninject.Web.Common;
 
+    using Services.Util;
+
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -40,7 +42,7 @@ namespace Web.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-            var kernel = new StandardKernel();
+            var kernel = new StandardKernel(new ServicesNinjectModule());
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
@@ -62,9 +64,7 @@ namespace Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            DependencyResolver.SetResolver(
-                    new Util.NinjectDependencyResolver(kernel)
-                );
+
         }        
     }
 }

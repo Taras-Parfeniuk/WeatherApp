@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using Services.Abstraction;
 using Domain.Entities.Abstraction;
 using Domain.Entities.Concretic;
+using Services.Exceptions;
 
 namespace Services.Concretic
 {
@@ -14,6 +15,17 @@ namespace Services.Concretic
         public ICurrentWeather ToCurrentWeather(string json)
         {
             var jObject = JObject.Parse(json);
+            var statusCode = (int)jObject["cod"];
+
+            switch (statusCode)
+            {
+                case 200:
+                    break;
+                case 404:
+                    throw new CityNotFoundException((string)jObject["message"]);
+                default:
+                    throw new Exception();
+            }
 
             return new CurrentDayForecast()
             {
@@ -48,6 +60,17 @@ namespace Services.Concretic
         public IMediumForecast ToMediumForecast(string json)
         {
             var jObject = JObject.Parse(json);
+            var statusCode = (int)jObject["cod"];
+
+            switch (statusCode)
+            {
+                case 200:
+                    break;
+                case 404:
+                    throw new CityNotFoundException((string)jObject["message"]);
+                default:
+                    throw new Exception();
+            }
 
             var forecast = new FiveDaysForecast()
             {
@@ -71,6 +94,17 @@ namespace Services.Concretic
         public ILongForecast ToLongForecast(string json)
         {
             var jObject = JObject.Parse(json);
+            var statusCode = (int)jObject["cod"];
+
+            switch (statusCode)
+            {
+                case 200:
+                    break;
+                case 404:
+                    throw new CityNotFoundException((string)jObject["message"]);
+                default:
+                    throw new Exception();
+            }
 
             var forecast = new SixteenDaysForecast()
             {

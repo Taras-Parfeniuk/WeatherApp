@@ -51,6 +51,7 @@
     <Compile Include="Abstraction\IWeatherService.cs" />
     <Compile Include="Concretic\BaseOpenWeatherService.cs" />
     <Compile Include="Abstraction\IForecastConverter.cs" />
+    <Compile Include="Exceptions\CityNotFoundException.cs" />
     <Compile Include="Concretic\HistoryService.cs" />
     <Compile Include="Concretic\OpenWeatherCitiesService.cs" />
     <Compile Include="Concretic\OpenWeatherService.cs" />

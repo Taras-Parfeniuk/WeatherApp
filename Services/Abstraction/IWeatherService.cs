@@ -6,6 +6,7 @@ namespace Services.Abstraction
     {
         IMediumForecast MediumForecast(string city);
         ILongForecast LongForecast(string city);
+        ILongForecast LongForecast(string city, int days);
         ICurrentWeather CurrentWeather(string city);
     }
 }

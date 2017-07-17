@@ -58,6 +58,28 @@ namespace Services.Concretic
             }
         }
 
+        public ILongForecast LongForecast(string city, int days)
+        {
+            try
+            {
+                string uri = $"http://api.openweathermap.org/data/2.5/forecast/daily?q={city}&cnt={days}&units=metric&APPID={_APIKEY}";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string data = string.Empty;
+
+                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                {
+                    data = stream.ReadToEnd();
+                }
+                return _responseConverter.ToLongForecast(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public ICurrentWeather CurrentWeather(string city)
         {
             string uri = $"http://api.openweathermap.org/data/2.5/weather?q={city}&units=metric&APPID={_APIKEY}";

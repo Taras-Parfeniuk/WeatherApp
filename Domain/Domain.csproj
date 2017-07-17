@@ -72,6 +72,8 @@
     <Compile Include="Entities\Concretic\HistoryEntry.cs" />
     <Compile Include="Entities\Concretic\SixteenDaysForecast.cs" />
     <Compile Include="Entities\Concretic\City.cs" />
+    <Compile Include="Exceptions\ItemAlreadyExistException.cs" />
+    <Compile Include="Exceptions\ItemNotExistException.cs" />
     <Compile Include="Migrations\201707121336426_InitialCreate.cs" />
     <Compile Include="Migrations\201707121336426_InitialCreate.Designer.cs">
       <DependentUpon>201707121336426_InitialCreate.cs</DependentUpon>

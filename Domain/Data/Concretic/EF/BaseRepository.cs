@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
+using Domain.Exceptions;
 using Domain.Data.Abstraction;
 
 namespace Domain.Data.Concretic.EF
@@ -13,14 +14,30 @@ namespace Domain.Data.Concretic.EF
     {
         public virtual void Add(TEntity entity)
         {
-            Items.Add(entity);
-            _context.SaveChanges();
+            try
+            {
+                Items.Add(entity);
+                _context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw new ItemAlreadyExistException("Item already exist", ex);
+            }
         }
+
+        public virtual void Update(TEntity entity) { }
 
         public virtual void Remove(TEntity entity)
         {
-            Items.Remove(entity);
+            try
+            {
+                Items.Remove(entity);
             _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new ItemNotExistException("Item already exist", ex);
+            }
         }
 
         public virtual void AddOrUpdate(TEntity entity) { }

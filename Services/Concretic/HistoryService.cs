@@ -14,11 +14,10 @@ namespace Services.Concretic
 {
     public class HistoryService : IHistoryService
     {
-        public HistoryService()
+        public HistoryService(ICitiesService citiesService, IHistoryRepository historyRepository)
         {
-            _kernel = new StandardKernel(new ServicesNinjectModule());
-            _citiesService = _kernel.Get<ICitiesService>();
-            _historyRepository = _kernel.Get<IHistoryRepository>();
+            _citiesService = citiesService;
+            _historyRepository = historyRepository;
         }
 
         public Guid AddToHistory(IMediumForecast forecast)
