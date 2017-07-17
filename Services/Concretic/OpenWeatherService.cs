@@ -14,6 +14,13 @@ namespace Services.Concretic
             _longForecastLenght = 7;
         }
 
+        public OpenWeatherService(IForecastConverter converter)
+        {
+
+            _longForecastLenght = 7;
+            _responseConverter = converter;
+        }
+
         public IMediumForecast MediumForecast(string city)
         {
             try

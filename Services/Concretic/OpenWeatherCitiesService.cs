@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Net;
 using System.IO;
+using System.Collections.Generic;
 
 using Ninject;
 
 using Services.Abstraction;
 using Domain.Entities.Concretic;
 using Domain.Data.Abstraction;
-using System.Collections.Generic;
+using Domain.Exceptions;
+
 
 namespace Services.Concretic
 {
@@ -16,6 +18,23 @@ namespace Services.Concretic
         public OpenWeatherCitiesService() : base()
         {
             _selectedCities = _kernel.Get<ISelectedCitiesRepository>();
+        }
+
+        public OpenWeatherCitiesService(ISelectedCitiesRepository selectedCities) : base()
+        {
+            _selectedCities = selectedCities;
+        }
+
+        public OpenWeatherCitiesService(ISelectedCitiesRepository selectedCities, IForecastConverter converter)
+        {
+            _selectedCities = selectedCities;
+            _responseConverter = converter;
+        }
+
+        public OpenWeatherCitiesService(IForecastConverter converter) : base()
+        {
+            _selectedCities = _kernel.Get<ISelectedCitiesRepository>();
+            _responseConverter = converter;
         }
 
         public City GetCityByName(string name)
@@ -60,9 +79,28 @@ namespace Services.Concretic
             }
         }
 
+        public void UpdateInSelected(City city)
+        {
+            try
+            {
+                _selectedCities.Update(city);
+            }
+            catch(ItemNotExistException ex)
+            {
+                throw ex;
+            }
+        }
+
         public void AddToSelected(City city)
         {
-            _selectedCities.AddOrUpdate(city);
+            try
+            {
+                _selectedCities.Add(city);
+            }
+            catch(ItemAlreadyExistException ex)
+            {
+                throw ex;
+            }
         }
 
         public List<City> GetSelected()

@@ -5,6 +5,7 @@ using System.Linq;
 
 using Domain.Data.Abstraction;
 using Domain.Entities.Concretic;
+using Domain.Exceptions;
 
 namespace Domain.Data.Concretic.EF
 {
@@ -24,6 +25,25 @@ namespace Domain.Data.Concretic.EF
         {
             _context.Forecasts.Load();
             return base.GetAll();
+        }
+
+        public override void Update(HistoryEntry entity)
+        {
+            var item = Items.FirstOrDefault(e => e.Id == entity.Id);
+
+            if (item == null)
+            {
+                throw new ItemNotExistException($"City with id: {entity.Id} not found");
+            }
+            else
+            {
+                item.CityId = entity.CityId;
+                item.Forecasts = entity.Forecasts;
+                item.Time = entity.Time;
+
+                _context.Entry(item).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
         }
 
         public override void AddOrUpdate(HistoryEntry entity)

@@ -9,6 +9,7 @@ namespace Services.Abstraction
         City GetCityByName(string name);
         City GetCityById(int id);
         List<City> GetSelected();
+        void UpdateInSelected(City city);
         void AddToSelected(City city);
         void RemoveFromSelected(City city);
     }

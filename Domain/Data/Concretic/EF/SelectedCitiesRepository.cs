@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 using Domain.Entities.Concretic;
 using Domain.Data.Abstraction;
-using System.Data.Entity;
+using Domain.Exceptions;
 
 namespace Domain.Data.Concretic.EF
 {
@@ -24,6 +25,10 @@ namespace Domain.Data.Concretic.EF
             {
                 Remove(item);
             }
+            else
+            {
+                throw new ItemNotExistException($"City with id: {id} not exist in selected");
+            }
         }
 
         public override void Remove(City entity)
@@ -34,6 +39,28 @@ namespace Domain.Data.Concretic.EF
                 Items.Remove(item);
                 _context.SaveChanges();
             }
+            else
+            {
+                throw new ItemNotExistException($"City with id: {entity.Id} not exist in selected");
+            }
+        }
+
+        public override void Update(City entity)
+        {
+            var item = Items.FirstOrDefault(e => e.Id == entity.Id);
+
+            if (item == null)
+            {
+                throw new ItemNotExistException($"City with id: {entity.Id} not found");
+            }
+            else
+            {
+                item.Country = entity.Country;
+                item.Name = entity.Name;
+
+                _context.Entry(item).State = EntityState.Modified;
+            }
+            _context.SaveChanges();
         }
 
         public override void AddOrUpdate(City entity)

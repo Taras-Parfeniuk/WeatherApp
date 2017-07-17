@@ -21,6 +21,27 @@ namespace Services.Concretic
             _historyRepository = _kernel.Get<IHistoryRepository>();
         }
 
+        public HistoryService(ICitiesService citiesService, IHistoryRepository historyRepository)
+        {
+            _kernel = new StandardKernel(new ServicesNinjectModule());
+            _citiesService = citiesService;
+            _historyRepository = historyRepository;
+        }
+
+        public HistoryService(IHistoryRepository historyRepository)
+        {
+            _kernel = new StandardKernel(new ServicesNinjectModule());
+            _citiesService = _kernel.Get<ICitiesService>();
+            _historyRepository = historyRepository;
+        }
+
+        public HistoryService(ICitiesService citiesService)
+        {
+            _kernel = new StandardKernel(new ServicesNinjectModule());
+            _citiesService = citiesService;
+            _historyRepository = _kernel.Get<IHistoryRepository>();
+        }
+
         public Guid AddToHistory(IMediumForecast forecast)
         {
             HistoryEntry entry = new HistoryEntry()
