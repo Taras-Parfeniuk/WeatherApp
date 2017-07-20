@@ -33,7 +33,7 @@ namespace Web.ApiControllers
             }
             catch(Exception ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
         }
 

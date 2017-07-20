@@ -33,6 +33,16 @@ namespace Web.ApiControllers
             return response;
         }
 
+        [Route("{cityId}")]
+        [HttpGet]
+        public HttpResponseMessage GetById(int cityId)
+        {
+                var result = _citiesService.GetSelected().FirstOrDefault(c => c.Id == cityId);
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.OK, $"City with id: {cityId} not found in selected list.");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         [Route("")]
         [HttpPost]
         public async Task<HttpResponseMessage> PostCity(HttpRequestMessage request)
@@ -47,28 +57,26 @@ namespace Web.ApiControllers
             }
             catch (CityNotFoundException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
             catch (ItemAlreadyExistException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
         }
 
         [Route("{cityId}")]
         [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteCity(HttpRequestMessage request)
+        public HttpResponseMessage DeleteCity(int cityId)
         {
-            var data = await request.Content.ReadAsStringAsync();
-            City city = JsonConvert.DeserializeObject<City>(data);
             try
             {
-                _citiesService.RemoveFromSelected(_citiesService.GetCityById(city.Id));
+                _citiesService.RemoveFromSelected(_citiesService.GetCityById(cityId));
                 return new HttpResponseMessage(HttpStatusCode.NoContent);
             }
             catch(ItemNotExistException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
         }
 
@@ -85,7 +93,7 @@ namespace Web.ApiControllers
             }
             catch (ItemNotExistException ex)
             {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }
         }
 
