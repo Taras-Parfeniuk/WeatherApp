@@ -4,48 +4,46 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-offset-3 col-lg-6">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<div class="container text-center">
-				@foreach(var c in Model)
+<div class="row">
+	<div class="city-title">
+		<h3>Selected cities</h3>
+	</div>
+</div>
+
+<div class="row">
+		<div class="panel-body cities-panel">
+		@foreach (var c in Model)
+		{
+			<div class="row">
+				<div>
+					<h3>@c.Id</h3>
+				</div>
+				<div>
+					<h3>@Html.ActionLink(c.Name, "Weather", "Forecast", new { city = c.Name }, null)</h3>
+				</div>
+				<div>
+					<h3>@c.Country</h3>
+				</div>
+				<div>
+					<div class="btn">@Html.ActionLink("Remove", "Delete", "SelectedCities", new { cityId = c.Id }, null)</div>
+				</div>
+			</div>
+			<hr />
+		}
+			<div class="row">
+				@using (Html.BeginForm("Add", "SelectedCities"))
 				{
 					<div class="row">
-						<div class="col-lg-2">
-							<span class="label label-default">@c.Id</span>
+						<div>
+							<input name="cityName" type="text" class="form-control" placeholder="City name">
 						</div>
-						<div class="col-lg-2">
-							@Html.ActionLink(c.Name, "Weather", "Forecast", new { city = c.Name }, null)
-						</div>
-						<div class="col-lg-2">
-							@c.Country
-						</div>
-						<div class="col-lg-2">
-							@Html.ActionLink("Remove", "Delete", "SelectedCities", new { cityId = c.Id}, null)
+						<div>
+							<button class="btn" type="submit">Add</button>
 						</div>
 					</div>
 				}
-				<div class="row">
-					@using (Html.BeginForm("Add", "SelectedCities"))
-					{
-						<div class="row">
-							<div class="col-lg-7">
-								<input name="cityName" type="text" class="form-control" placeholder="City name">
-							</div>
-							<div class="col-lg-1">
-								<button class="btn btn-default" type="submit">Add</button>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-9">
-								<hr/>
-							</div>
-						</div>
-					}
-				</div>
 			</div>
 		</div>
-	</div>
 </div>
 
 

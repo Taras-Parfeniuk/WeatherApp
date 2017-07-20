@@ -11,101 +11,54 @@
 
 	<title>Bare - Start Bootstrap Template</title>
 
-	<!-- Bootstrap Core CSS -->
-	<link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
-	<link href="~/Content/css/site.css" rel="stylesheet" />
-	<!-- Custom CSS -->
-	<style>
-		body {
-			padding-top: 70px;
-			/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-		}
-	</style>
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	<link rel="stylesheet" href="~/Content/css/main.css" />
 
 </head>
 
 <body>
-
-	<!-- Navigation -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		<div class="container">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				@Html.ActionLink("Home", "Index", "Home", null, new { @class = "navbar-brand" })
-				<ul class="nav navbar-nav">
-					<li>@Html.ActionLink("Cities", "Index", "SelectedCities")</li>
-					<li>@Html.ActionLink("History", "Queries", "History")</li>
-				</ul>
-			</div>
+	<header>
+		<div class="logo">
+			<h2>Weather<span>App</span></h2>
 		</div>
-		<!-- /.container -->
-	</nav>
-	<div class="container">
-				<!--City search-->
-				<div class="row">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div class="text-center list-inline panel-default">
-								<!--список міст можна зробити з топу запитів-->
-								<div class="col-lg-2">
-									@Html.ActionLink("Kyiv", "Weather", "Forecast", new { city = "Kyiv" }, null)
-								</div>
-								<div class="col-lg-2">
-									@Html.ActionLink("Lviv", "Weather", "Forecast", new { city = "Lviv" }, null)
-								</div>
-								<div class="col-lg-2">
-									@Html.ActionLink("Odessa", "Weather", "Forecast", new { city = "Odessa" }, null)
-								</div>
-								<div class="col-lg-2">
-									@Html.ActionLink("Kharkiv", "Weather", "Forecast", new { city = "Kharkiv" }, null)
-								</div>
-								<div class="col-lg-2">
-									@Html.ActionLink("Dnipropetrovsk", "Weather", "Forecast", new { city = "Dnipropetrovsk" }, null)
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					@using (Html.BeginForm("Weather", "Forecast"))
-					{
-						<div class="row">
-							<div class="col-lg-3 col-lg-offset-4">
-								<div class="input-group">
-									<input name="city" type="text" class="form-control" placeholder="Find your city...">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button">Go!</button>
-									</span>
-								</div>
-							</div>
-						</div>
-					}
+		<div class="navbar">
+			@Html.ActionLink("Home", "Index", "Home")
+			@Html.ActionLink("Cities", "Index", "SelectedCities")
+			@Html.ActionLink("History", "Queries", "History")
+		</div>
+	</header>
+
+	<div class="main-content">
+		<div class="container">
+			<div class="row">
+				<div class="city-search">
+				@using (Html.BeginForm("Weather", "Forecast"))
+				{
+					<input name="city" type="text" placeholder="Find your city...">
+				}
 				</div>
 			</div>
-		<!-- Page Content -->
-		<div class="row main-content">
+			<div class="row">
+				<div class="default-cities-list">
+					@Html.ActionLink("Kyiv", "Weather", "Forecast", new { city = "Kyiv" }, null)
+					@Html.ActionLink("Lviv", "Weather", "Forecast", new { city = "Lviv" }, null)
+					@Html.ActionLink("Odessa", "Weather", "Forecast", new { city = "Odessa" }, null)
+					@Html.ActionLink("Kharkiv", "Weather", "Forecast", new { city = "Kharkiv" }, null)
+					@Html.ActionLink("Dnipropetrovsk", "Weather", "Forecast", new { city = "Dnipropetrovsk" }, null)
+				</div>
+			</div>
 			@RenderBody()
 		</div>
-		<!-- /.container -->
-		<!-- jQuery Version 1.11.1 -->
-	<script src="~/Content/js/jquery.js"></script>
+	</div>
 
-	<!-- Bootstrap Core JavaScript -->
-	<script src="~/Content/js/bootstrap.min.js"></script>
-
+	<footer>
+		<div class="about-company">
+			<p>ООО "Рога и копыта"</p>
+		</div>
+		<div class="contacts">
+			<p>+38011111111</p>
+		</div>
+	</footer>
 </body>
-
 </html>

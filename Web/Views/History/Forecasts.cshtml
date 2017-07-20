@@ -3,48 +3,30 @@
 	ViewBag.Title = "Forecasts";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="row text-center">
-	<div class="col-lg-4 col-lg-offset-4">
-		<h2>@Model.City.Name, @Model.City.Country</h2>
+<div class="row">
+	<div class="city-title">
+		<h3>@Model.City.Name, @Model.City.Country</h3>
 	</div>
 </div>
-
-<div class="col-lg-offset-3 col-lg-6">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<div class="container text-center">
+<div class="row">
+	<div class="panel">
+		<div class="panel-body history-panel">
+			@foreach (var f in Model.Forecasts)
+			{
 				<div class="row">
-					<div class="col-lg-2">
-						Forecast time
+					<div>
+						<h4>@f.ForecastTime</h4>
 					</div>
-					<div class="col-lg-3">
-						Weather
+					<div>
+						<h4>@f.WeatherState, @f.WeatherDescription</h4>
 					</div>
-					<div class="col-lg-3">
-						Temperature
+					<div>
+						<h4>@f.MinTemperature C - @f.MaxTemperature C</h4>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="panel-body">
-			<div class="container text-center">
-				@foreach (var f in Model.Forecasts)
-				{
-					<div class="row">
-						<div class="col-lg-3">
-							@f.ForecastTime
-						</div>
-						<div class="col-lg-3">
-							@f.WeatherState, @f.WeatherDescription
-						</div>
-						<div class="col-lg-3">
-							@f.MinTemperature - @f.MaxTemperature
-						</div>
-					</div>
-				}
-			</div>
+			}
 		</div>
 	</div>
 </div>
+
 

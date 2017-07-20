@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 
 using NUnit.Framework;
+using Ninject;
 
 using Domain.Entities.Abstraction;
 using Domain.Entities.Concretic;
 using Services.Abstraction;
 using Services.Concretic;
+using Services.Util;
 
 namespace WeatherApp.Test.Services
 {
@@ -17,7 +19,8 @@ namespace WeatherApp.Test.Services
         public void AddToHistory_GetEntryById_When_given_ICurrentForecast_object_Then_add_it_to_History_and_return_correct_added_entry()
         {
             // Arrange
-            IHistoryService historyService = new HistoryService();
+            IKernel kernel = new StandardKernel(new ServicesNinjectModule());
+            IHistoryService historyService = kernel.Get<IHistoryService>();
             ICurrentWeather input = new CurrentDayForecast()
             {
                 City = new City()
