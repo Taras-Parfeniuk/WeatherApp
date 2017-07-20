@@ -191,8 +191,10 @@
   <ItemGroup>
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\main.css" />
     <Content Include="Content\css\site.css" />
     <Content Include="Content\css\site.min.css" />
+    <Content Include="Content\images\background.jpg" />
     <Content Include="Content\images\banner1.svg" />
     <Content Include="Content\images\banner2.svg" />
     <Content Include="Content\images\banner3.svg" />

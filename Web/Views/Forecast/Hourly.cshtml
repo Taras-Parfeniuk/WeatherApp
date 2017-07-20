@@ -4,189 +4,134 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row text-center">
-	<div class="col-lg-4 col-lg-offset-4">
-		<h2>@Model.City.Name, @Model.City.Country</h2>
+<div class="row">
+	<div class="city-title">
+		<h3>@Model.City.Name, @Model.City.Country</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="panel-body forecast-toggle">
+		@Html.ActionLink("current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
+		@Html.ActionLink("three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
+		@Html.ActionLink("seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
 	</div>
 </div>
 
-<div class="row">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<div class="text-center list-inline panel-default">
-				<div class="col-lg-4">
-					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
+@{
+	var todayHours = new List<IBaseForecast>();
+
+	if (Model.HourForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
+	{
+		<div class="row">
+			<div class="panel">
+				<div class="panel-header">
+					@DateTime.Now.DayOfWeek
 				</div>
-				<div class="col-lg-4">
-					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
+				<div class="panel-body">
+				@{
+					var nextDayStart = Model.HourForecasts.First(h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
+					todayHours = Model.HourForecasts.TakeWhile(h => h != nextDayStart).ToList();
+
+					foreach (var h in todayHours)
+					{
+						var weatherIco = $"/Content/images/icon/{h.WeatherIcon}.svg";
+
+						<div class="row">
+							<div>
+								<h4>@h.ForecastTime.TimeOfDay</h4>
+							</div>
+							<div class="weather-icon">
+								<img src=@weatherIco />
+								<h4>@h.WeatherDescription</h4>
+							</div>
+							<div>
+								<h4>Temperature:</h4>
+								<p>@h.MinTemperature C - @h.MaxTemperature C</p>
+							</div>
+							<div>
+								<h4>Wind speed:</h4>
+								<p>@h.WindSpeed m/s</p>
+							</div>
+							<div>
+								<h4>Pressure:</h4>
+								<p>@h.DefaultPressure</p>
+							</div>
+							<div>
+								<h4>Humidity:</h4>
+								<p>@h.Humidity</p>
+							</div>
+						</div>
+						<hr />
+					}
+				}
+					</div>
 				</div>
-				<div class="col-lg-4">
-					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
-				</div>
+			</div>
+						}
+
+						var hours = new List<IBaseForecast>();
+						hours = Model.HourForecasts.Skip(todayHours.Count()).ToList();
+					}
+@while (hours.Exists(h => h.ForecastTime.TimeOfDay == TimeSpan.Zero))
+{
+	<div class="row">
+		<div class="panel">
+			<div class="panel-header">
+				@hours.First().ForecastTime.DayOfWeek
+			</div>
+			@{ 
+				var dayHours = new List<IBaseForecast>();
+				var nextDayStartId = hours.FindIndex(1, h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
+				var dayStart = nextDayStartId > 0 ? hours[nextDayStartId] : null;
+
+				if (dayStart != null)
+				{
+					dayHours = hours.TakeWhile(h => h != dayStart).ToList();
+				}
+				else
+				{
+					dayHours = hours;
+
+				}
+			}
+			<div class="panel-body">
+				
+					@foreach (var h in dayHours)
+					{
+						var weatherIco = $"/Content/images/icon/{h.WeatherIcon}.svg";
+
+						<div class="row">
+							<div>
+								<h4>@h.ForecastTime.TimeOfDay</h4>
+							</div>
+							<div class="weather-icon">
+								<img src=@weatherIco />
+								<h4>@h.WeatherDescription</h4>
+							</div>
+							<div>
+								<h4>Temperature:</h4>
+								<p>@h.MinTemperature C - @h.MaxTemperature C</p>
+							</div>
+							<div>
+								<h4>Wind speed:</h4>
+								<p>@h.WindSpeed m/s</p>
+							</div>
+							<div>
+								<h4>Pressure:</h4>
+								<p>@h.DefaultPressure</p>
+							</div>
+							<div>
+								<h4>Humidity:</h4>
+								<p>@h.Humidity</p>
+							</div>
+						</div>
+						<hr />
+					}
+				@{
+					hours = hours.Skip(dayHours.Count).ToList();
+				}
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="row text-center">
-	<div class="col-lg-12">
-		<div class="container">
-			@{
-				var todayHours = new List<IBaseForecast>();
-
-				if (Model.HourForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
-				{
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h3>@DateTime.Now.DayOfWeek</h3>
-						</div>
-						<div class="panel-body">
-							@{
-								var nextDayStart = Model.HourForecasts.First(h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
-								todayHours = Model.HourForecasts.TakeWhile(h => h != nextDayStart).ToList();
-
-								foreach (var h in todayHours)
-								{
-									var weatherIco = $"/Content/images/icon/{h.WeatherIcon}.svg";
-
-									<div class="row">
-										<div class="col-lg-2">
-											<h4>@h.ForecastTime.TimeOfDay</h4>
-										</div>
-										<div class="col-lg-2">
-											<div class="row">
-												<img src=@weatherIco />
-											</div>
-											<div class="row">
-												@h.WeatherDescription
-											</div>
-										</div>
-										<div class="col-lg-2">
-											<div class="row">
-												<h4>Temperature:</h4>
-											</div>
-											<div class="row">
-												@h.MinTemperature C - @h.MaxTemperature C
-											</div>
-										</div>
-										<div class="col-lg-2">
-											<div class="row">
-												<h4>Wind speed:</h4>
-											</div>
-											<div class="row">
-												@h.WindSpeed m/s
-											</div>
-										</div>
-										<div class="col-lg-2">
-											<div class="row">
-												<h4>Pressure:</h4>
-											</div>
-											<div class="row">
-												@h.DefaultPressure
-											</div>
-										</div>
-										<div class="col-lg-2">
-											<div class="row">
-												<h4>Humidity:</h4>
-											</div>
-											<div class="row">
-												@h.Humidity
-											</div>
-										</div>
-									</div>
-									<hr />
-								}
-							}
-						</div>
-					</div>
-								}
-
-								var hours = new List<IBaseForecast>();
-								hours = Model.HourForecasts.Skip(todayHours.Count()).ToList();
-			}
-
-			@while (hours.Exists(h => h.ForecastTime.TimeOfDay == TimeSpan.Zero))
-			{
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3>@hours.First().ForecastTime.DayOfWeek</h3>
-					</div>
-					@{
-						var dayHours = new List<IBaseForecast>();
-						var nextDayStartId = hours.FindIndex(1, h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
-						var dayStart = nextDayStartId > 0 ? hours[nextDayStartId] : null;
-
-						if (dayStart != null)
-						{
-							dayHours = hours.TakeWhile(h => h != dayStart).ToList();
-						}
-						else
-						{
-							dayHours = hours;
-
-						}
 					}
 
-					<div class="panel-body">
-
-						@foreach (var h in dayHours)
-						{
-							var weatherIco = $"/Content/images/icon/{h.WeatherIcon}.svg";
-
-							<div class="row">
-								<div class="col-lg-2">
-									<h4>@h.ForecastTime.TimeOfDay</h4>
-								</div>
-								<div class="col-lg-2">
-									<div class="row">
-										<img src=@weatherIco />
-									</div>
-									<div class="row">
-										@h.WeatherDescription
-									</div>
-								</div>
-								<div class="col-lg-2">
-									<div class="row">
-										<h4>Temperature:</h4>
-									</div>
-									<div class="row">
-										@h.MinTemperature C - @h.MaxTemperature C
-									</div>
-								</div>
-								<div class="col-lg-2">
-									<div class="row">
-										<h4>Wind speed:</h4>
-									</div>
-									<div class="row">
-										@h.WindSpeed m/s
-									</div>
-								</div>
-								<div class="col-lg-2">
-									<div class="row">
-										<h4>Pressure:</h4>
-									</div>
-									<div class="row">
-										@h.DefaultPressure
-									</div>
-								</div>
-								<div class="col-lg-2">
-									<div class="row">
-										<h4>Humidity:</h4>
-									</div>
-									<div class="row">
-										@h.Humidity
-									</div>
-								</div>
-							</div>
-							<hr/>
-						}
-						@{
-							hours = hours.Skip(dayHours.Count).ToList();
-						}
-					</div>
-				</div>
-
-							}
-		</div>
-		</div>
-</div>

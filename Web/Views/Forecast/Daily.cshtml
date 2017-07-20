@@ -5,85 +5,65 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row text-center">
-	<div class="col-lg-4 col-lg-offset-4">
-		<h2>@Model.City.Name, @Model.City.Country</h2>
+<div class="row">
+	<div class="city-title">
+		<h3>@Model.City.Name, @Model.City.Country</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="panel-body forecast-toggle">
+		@Html.ActionLink("current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
+		@Html.ActionLink("three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
+		@Html.ActionLink("seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
 	</div>
 </div>
 
-<div class="row">
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<div class="text-center list-inline panel-default">
-				<div class="col-lg-4">
-					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
+@{
+	foreach (var d in Model.DayForecasts)
+	{
+		var weatherIco = $"/Content/images/icon/{d.WeatherIcon}.svg";
+
+		<div class="row">
+			<div class="panel">
+				<div class="panel-header">
+					@d.ForecastTime.ToLongDateString()
 				</div>
-				<div class="col-lg-4">
-					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
-				</div>
-				<div class="col-lg-4">
-					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
+				<div class="panel-body">
+					<div class="row">
+						<div class="weather-icon">
+							<img src=@weatherIco />
+								<h3>@d.WeatherDescription</h3>
+						</div>
+						<div>
+							<h3>Morning temperature</h3>
+							<p>@d.MorningTemperature C</p>
+						</div>
+						<div>
+							<h3>Day temperature</h3>
+							<p>@d.DayTemperature C</p>
+						</div>
+						<div>
+							<h3>Evening temperature</h3>
+							<p>@d.EveningTemperature C</p>
+						</div>
+						<div>
+							<h3>Wind:</h3>
+							<p>@d.WindSpeed m/s</p>
+						</div>
+						<div>
+							<h3>Humidity:</h3>
+							<p>@d.Humidity</p>
+						</div>
+					</div>
+					<hr />
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
 
-<div class="row">
-	<div class="col-lg-12">
-
-	@{
-		foreach (var d in Model.DayForecasts)
-		{
-			var weatherIco = $"/Content/images/icon/{d.WeatherIcon}.svg";
-
-			<div class="container">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3>
-							@d.ForecastTime.ToLongDateString()
-						</h3>
-						<div class="container">
-							<div class="row">
-								<img src=@weatherIco />
-								@d.WeatherDescription
-							</div>
-						</div>
-					</div>
-					<div class="panel-body">
-						<div class="container-fluid">
-							<div class="row text-center">
-								<div class="col-lg-4">
-									<h3>Morning temperature</h3>
-									<p>@d.MorningTemperature C</p>
-								</div>
-								<div class="col-lg-4">
-									<h3>Day temperature</h3>
-									<p>@d.DayTemperature C</p>
-								</div>
-								<div class="col-lg-4">
-									<h3>Evening temperature</h3>
-									<p>@d.EveningTemperature C</p>
-								</div>
-							</div>
-							<hr/>
-							<div class="row">
-								<div class="col-lg-offset-3 col-lg-3">
-									Wind: @d.WindSpeed m/s
-								</div>
-								<div class="col-lg-offset-3 col-lg-3">
-									Humidity: @d.Humidity
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		}
 	}
-		
-	</div>
-</div>
+}
+
+
 
 
 

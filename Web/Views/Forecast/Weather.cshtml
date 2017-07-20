@@ -5,90 +5,58 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row text-center">
-	<div class="col-lg-4 col-lg-offset-4">
-		<h2>@Model.City.Name, @Model.City.Country</h2>
-	</div>
-</div>
-
 <div class="row">
-	<div class="panel panel-default">
+	<div class="city-title">
+		<h3>@Model.City.Name, @Model.City.Country</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="panel-body forecast-toggle">
+		@Html.ActionLink("current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
+		@Html.ActionLink("three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
+		@Html.ActionLink("seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
+	</div>
+</div>
+<div class="row">
+	<div class="panel">
+		<div class="panel-header">
+			@Model.ForecastTime.ToLongDateString()
+		</div>
 		<div class="panel-body">
-			<div class="text-center list-inline panel-default">
-				<div class="col-lg-4">
-					@Html.ActionLink("Current day", "Weather", "Forecast", new { city = Model.City.Name }, null)
+			<div class="row">
+				<div class="weather-icon">
+					@{
+						var weatherIco = $"/Content/images/icon/{Model.WeatherIcon}.svg";
+					}
+					<img src=@weatherIco />
+					<h4>@Model.WeatherDescription</h4>
 				</div>
-				<div class="col-lg-4">
-					@Html.ActionLink("Three days", "Hourly", "Forecast", new { city = Model.City.Name }, null)
-				</div>
-				<div class="col-lg-4">
-					@Html.ActionLink("Seven days", "Daily", "Forecast", new { city = Model.City.Name }, null)
+				<div class="weather-description">
+					<h3>@Model.WeatherState, @Model.MinTemperature C- @Model.MaxTemperature C</h3>
 				</div>
 			</div>
+			<hr />
+			<div class="row">
+				<div class="weather-icon">
+					<img src="~/Content/images/icon/icon-1.svg" />
+				</div>
+				<div class="weather-description">
+					<h3>Sunrise at @Model.Sunrise.TimeOfDay</h3>
+					<h3>Sunset at @Model.Sunset.TimeOfDay</h3>
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="weather-icon">
+					<img src="~/Content/images/icon/icon-7.svg" />
+				</div>
+				<div class="weather-description">
+					<h3>Wind Speed: @Model.WindSpeed m/s</h3>
+					<h3>Humidity: @Model.Humidity</h3>
+					<h3>Pressure: @Model.DefaultPressure</h3>
+				</div>
+			</div>
+			<hr />
 		</div>
 	</div>
 </div>
-
-		<div class="col-lg-offset-3 col-lg-6">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">@Model.ForecastTime.ToLongDateString()</h3>
-				</div>
-				<div class="panel-body">
-					<div class="container text-center">
-						<div class="row">
-							<div class="col-lg-4">
-								@{ 
-									var weatherIco = $"/Content/images/icon/{Model.WeatherIcon}.svg";
-								}
-								<img src=@weatherIco />
-							</div>
-							<div class="col-lg-3">
-								<div class="row">
-									<h4>@Model.WeatherState, @Model.MinTemperature C- @Model.MaxTemperature C</h4>
-								</div>
-								<div class="row">
-									<p>@Model.WeatherDescription</p>
-								</div>
-							</div>
-							
-						</div>
-						<div class="row">
-							<hr/>
-						</div>
-						<div class="row">
-							<div class="col-lg-4">
-								<img src="~/Content/images/icon/icon-1.svg" />
-							</div>
-							<div class="col-lg-3">
-								<div class="row">
-									<h5>Sunrise at @Model.Sunrise.TimeOfDay</h5>
-								</div>
-								<div class="row">
-									<h5>Sunset at @Model.Sunset.TimeOfDay</h5>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<hr />
-						</div>
-						<div class="row">
-							<div class="col-lg-4">
-								<img src="~/Content/images/icon/icon-7.svg" />
-							</div>
-							<div class="col-lg-3">
-								<div class="row">
-									<h5>Wind Speed: @Model.WindSpeed m/s</h5>
-								</div>
-								<div class="row">
-									<h5>Humidity: @Model.Humidity</h5>
-								</div>
-								<div class="row">
-									<h5>Pressure: @Model.DefaultPressure</h5>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>

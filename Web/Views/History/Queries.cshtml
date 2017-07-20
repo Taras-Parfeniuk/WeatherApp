@@ -4,66 +4,37 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="col-lg-offset-3 col-lg-6">
-	<div class="row">
-		<div class="col-lg-9">
-			<hr />
+<div class="row">
+	@using (Html.BeginForm("Queries", "History"))
+	{
+		<div class="city-filter">
+			<input name="cityName" type="text" class="form-control" placeholder="Filter: city name">
+			<button class="btn" type="submit">Show</button>
+			<div class="btn">@Html.ActionLink("All", "Queries", "History")</div>
 		</div>
-	</div>
-	<div class="row">
+	}
+</div>
 
-		@using (Html.BeginForm("Queries", "History"))
-		{
-			<div class="row">
-				<div class="col-lg-offset-3 col-lg-4">
-					<input name="cityName" type="text" class="form-control" placeholder="Filter: city name">
-				</div>
-				<div class="col-lg-1">
-					<button class="btn btn-default" type="submit">Show</button>
-				</div>
-			</div>
-		}
-	</div>
-	<div class="row">
-		<div class="col-lg-9">
-			<hr />
-		</div>
-	</div>
-	<div class="row">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<div class="container text-center">
-					<div class="row">
-						<div class="col-lg-3">
-							Query time
-						</div>
-						<div class="col-lg-3">
-							City
-						</div>
-						<div class="col-lg-3">
-							Forecast lenght
-						</div>
+<div class="row">
+	<div class="panel">
+		<div class="panel-body history-panel">
+			@foreach (var q in Model)
+			{
+				<div class="row">
+					<div>
+						<h4>@q.QueryTime.ToString()</h4>
+					</div>
+					<div>
+						<h4>@q.City.Name, @q.City.Country</h4>
+					</div>
+					<div class="btn">
+						@Html.ActionLink("Forecasts", "Forecasts", new { queryId = q.Id })
 					</div>
 				</div>
-			</div>
-			<div class="panel-body">
-				<div class="container text-center">
-					@foreach (var q in Model)
-					{
-						<div class="row">
-							<div class="col-lg-3">
-								@q.QueryTime
-							</div>
-							<div class="col-lg-3">
-								@q.City.Name, @q.City.Country
-							</div>
-							<div class="col-lg-3">
-								@Html.ActionLink(@q.Forecasts.Count.ToString(), "Forecasts", new { queryId = q.Id })
-							</div>
-						</div>
-					}
-				</div>
-			</div>
+				<hr />
+				}
 		</div>
 	</div>
 </div>
+
+
