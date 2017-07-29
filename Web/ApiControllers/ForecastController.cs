@@ -21,9 +21,9 @@ namespace Web.ApiControllers
             _weatherService = weatherService;
         }
 
-        [Route("")]
+        [Route("daily")]
         [HttpGet]
-        public HttpResponseMessage GetByCity([FromUri]string city, [FromUri]int days)
+        public HttpResponseMessage GetDailyByCity([FromUri]string city, [FromUri]int days)
         {
             try
             {
@@ -31,7 +31,39 @@ namespace Web.ApiControllers
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+            }
+        }
+
+        [Route("hourly")]
+        [HttpGet]
+        public HttpResponseMessage GetHourlyByCity([FromUri]string city)
+        {
+            try
+            {
+                var result = _weatherService.MediumForecast(city);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+            }
+        }
+
+        [Route("current")]
+        [HttpGet]
+        public HttpResponseMessage GetCurrentByCity([FromUri]string city)
+        {
+            try
+            {
+                var result = _weatherService.CurrentWeather(city);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
+                return response;
+            }
+            catch (Exception ex)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
             }

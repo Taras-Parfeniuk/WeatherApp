@@ -96,6 +96,18 @@ namespace Services.Concretic
             _selectedCities.Remove(city);
         }
 
+        public List<City> GetDefault()
+        {
+            List<City> defaultCities = new List<City>();
+            defaultCities.Add(GetCityByName("Kyiv"));
+            defaultCities.Add(GetCityByName("Lviv"));
+            defaultCities.Add(GetCityByName("Odessa"));
+            defaultCities.Add(GetCityByName("Kharkiv"));
+            defaultCities.Add(GetCityByName("Dnipropetrovsk"));
+
+            return defaultCities;
+        }
+
         private ISelectedCitiesRepository _selectedCities;
     }
 }

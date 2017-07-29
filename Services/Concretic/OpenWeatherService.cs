@@ -60,6 +60,9 @@ namespace Services.Concretic
 
         public ILongForecast LongForecast(string city, int days)
         {
+            if (days > 16 || days < 1)
+                throw new ArgumentOutOfRangeException("days", "Days parameter must be in range 1..16.");
+
             try
             {
                 string uri = $"http://api.openweathermap.org/data/2.5/forecast/daily?q={city}&cnt={days}&units=metric&APPID={_APIKEY}";
@@ -100,7 +103,7 @@ namespace Services.Concretic
                 throw ex;
             }
         }
-
+        
         private int _longForecastLenght;
     }
 }

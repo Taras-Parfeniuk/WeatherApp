@@ -33,6 +33,15 @@ namespace Web.ApiControllers
             return response;
         }
 
+        [Route("/default")]
+        [HttpGet]
+        public HttpResponseMessage GetDefault()
+        {
+            var result = _citiesService.GetDefault();
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
+            return response;
+        }
+
         [Route("{cityId}")]
         [HttpGet]
         public HttpResponseMessage GetById(int cityId)
