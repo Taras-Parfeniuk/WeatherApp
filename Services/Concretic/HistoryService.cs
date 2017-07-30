@@ -20,13 +20,13 @@ namespace Services.Concretic
             _historyRepository = historyRepository;
         }
 
-        public Guid AddToHistory(IMediumForecast forecast)
+        public Guid AddToHistory(IMultipleForecast forecast)
         {
             HistoryEntry entry = new HistoryEntry()
             {
                 Id = Guid.NewGuid(),
                 CityId = forecast.City.Id,
-                Forecasts = new List<Forecast>(forecast.HourForecasts.Select(f => new Forecast(f))),
+                Forecasts = new List<StoredForecast>(forecast.SingleForecasts.Select(f => new StoredForecast(f))),
                 Time = DateTime.Now
             };
 
@@ -40,23 +40,9 @@ namespace Services.Concretic
             {
                 Id = Guid.NewGuid(),
                 CityId = forecast.City.Id,
-                Forecasts = new List<Forecast>() { new Forecast(forecast) },
+                Forecasts = new List<StoredForecast>() { new StoredForecast(forecast) },
                 Time = DateTime.Now
             };
-            _historyRepository.AddOrUpdate(entry);
-            return entry.Id;
-        }
-
-        public Guid AddToHistory(ILongForecast forecast)
-        {
-            HistoryEntry entry = new HistoryEntry()
-            {
-                Id = Guid.NewGuid(),
-                CityId = forecast.City.Id,
-                Forecasts = new List<Forecast>(forecast.DayForecasts.Select(f => new Forecast(f))),
-                Time = DateTime.Now
-            };
-
             _historyRepository.AddOrUpdate(entry);
             return entry.Id;
         }

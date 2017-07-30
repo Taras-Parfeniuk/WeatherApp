@@ -14,7 +14,7 @@ namespace Services.Concretic
             _longForecastLenght = 7;
         }
 
-        public IMediumForecast MediumForecast(string city)
+        public IMultipleForecast MediumForecast(string city)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace Services.Concretic
             }
         }
 
-        public ILongForecast LongForecast(string city)
+        public IMultipleForecast LongForecast(string city)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace Services.Concretic
             }
         }
 
-        public ILongForecast LongForecast(string city, int days)
+        public IMultipleForecast LongForecast(string city, int days)
         {
             if (days > 16 || days < 1)
                 throw new ArgumentOutOfRangeException("days", "Days parameter must be in range 1..16.");

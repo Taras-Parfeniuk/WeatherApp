@@ -9,11 +9,11 @@ namespace Domain.Entities.Concretic
         public int CityId { get; set; }
         
         public DateTime Time { get; set; }
-        public List<Forecast> Forecasts { get; set; }
+        public List<StoredForecast> Forecasts { get; set; }
 
         public HistoryEntry()
         {
-            Forecasts = new List<Forecast>();
+            Forecasts = new List<StoredForecast>();
         }
     }
 }

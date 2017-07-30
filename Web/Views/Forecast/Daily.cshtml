@@ -1,4 +1,4 @@
-@model ILongForecast
+@model IMultipleForecast
 
 @{
 	ViewData["Title"] = $"Daily forecast in {Model.City.Name}";
@@ -19,7 +19,7 @@
 </div>
 
 @{
-	foreach (var d in Model.DayForecasts)
+	foreach (var d in Model.SingleForecasts)
 	{
 		var weatherIco = $"/Content/images/icon/{d.WeatherIcon}.svg";
 

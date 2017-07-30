@@ -13,32 +13,25 @@ namespace Domain.Entities.Concretic
         public DateTime QueryTime { get; set; }
         public City City { get; set; }
 
-        public List<Forecast> Forecasts { get; set; }
+        public List<StoredForecast> Forecasts { get; set; }
 
         public ForecastQueryInfo()
         {
-            Forecasts = new List<Forecast>();
+            Forecasts = new List<StoredForecast>();
         }
 
-        public ForecastQueryInfo(IMediumForecast forecast)
+        public ForecastQueryInfo(IMultipleForecast forecast)
         {
             QueryTime = DateTime.Now;
             City = forecast.City;
-            Forecasts = new List<Forecast>(forecast.HourForecasts.Select(f => f as Forecast));
-        }
-
-        public ForecastQueryInfo(ILongForecast forecast)
-        {
-            QueryTime = DateTime.Now;
-            City = forecast.City;
-            Forecasts = new List<Forecast>(forecast.DayForecasts.Select(f => f as Forecast));
+            Forecasts = new List<StoredForecast>(forecast.SingleForecasts.Select(f => f as StoredForecast));
         }
 
         public ForecastQueryInfo(ICurrentWeather forecast)
         {
             QueryTime = DateTime.Now;
             City = forecast.City;
-            Forecasts = new List<Forecast>() { forecast as Forecast };
+            Forecasts = new List<StoredForecast>() { forecast as StoredForecast };
         }
     }
 }

@@ -5,12 +5,12 @@ namespace Services.Abstraction
 {
     public interface IForecastConverter
     {
-        IBaseForecast ToBaseForecast(JObject jObject);
-        IBaseForecast ToBaseForecast(string json);
+        ISingleForecast ToHourlyForecast(JObject jObject);
+        ISingleForecast ToHourlyForecast(string json);
         ICurrentWeather ToCurrentWeather(string json);
-        IDayForecast ToDayForecast(JObject jObject);
-        IDayForecast ToDayForecast(string json);
-        ILongForecast ToLongForecast(string json);
-        IMediumForecast ToMediumForecast(string json);
+        ISingleForecast ToDayForecast(JObject jObject);
+        ISingleForecast ToDayForecast(string json);
+        IMultipleForecast ToLongForecast(string json);
+        IMultipleForecast ToMediumForecast(string json);
     }
 }

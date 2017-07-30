@@ -1,4 +1,4 @@
-@model IMediumForecast
+@model IMultipleForecast
 @{
 	ViewData["Title"] = $"Hourly forecast in {Model.City.Name}";
 	Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,9 +18,9 @@
 </div>
 
 @{
-	var todayHours = new List<IBaseForecast>();
+	var todayHours = new List<ISingleForecast>();
 
-	if (Model.HourForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
+	if (Model.SingleForecasts.First().ForecastTime.TimeOfDay != TimeSpan.Zero)
 	{
 		<div class="row">
 			<div class="panel">
@@ -29,8 +29,8 @@
 				</div>
 				<div class="panel-body">
 				@{
-					var nextDayStart = Model.HourForecasts.First(h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
-					todayHours = Model.HourForecasts.TakeWhile(h => h != nextDayStart).ToList();
+					var nextDayStart = Model.SingleForecasts.First(h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
+					todayHours = Model.SingleForecasts.TakeWhile(h => h != nextDayStart).ToList();
 
 					foreach (var h in todayHours)
 					{
@@ -69,8 +69,8 @@
 			</div>
 						}
 
-						var hours = new List<IBaseForecast>();
-						hours = Model.HourForecasts.Skip(todayHours.Count()).ToList();
+						var hours = new List<ISingleForecast>();
+						hours = Model.SingleForecasts.Skip(todayHours.Count()).ToList();
 					}
 @while (hours.Exists(h => h.ForecastTime.TimeOfDay == TimeSpan.Zero))
 {
@@ -80,7 +80,7 @@
 				@hours.First().ForecastTime.DayOfWeek
 			</div>
 			@{ 
-				var dayHours = new List<IBaseForecast>();
+				var dayHours = new List<ISingleForecast>();
 				var nextDayStartId = hours.FindIndex(1, h => h.ForecastTime.TimeOfDay == TimeSpan.Zero);
 				var dayStart = nextDayStartId > 0 ? hours[nextDayStartId] : null;
 

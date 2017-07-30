@@ -23,7 +23,7 @@ namespace Web.Controllers
             }
             catch(Exception ex)
             {
-                return View("Error");
+                return View("Error", ex);
             }
         }
 
@@ -37,7 +37,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error");
+                return View("Error", ex);
             }
         }
 
@@ -51,7 +51,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error");
+                return View("Error", ex);
             }
         }
 

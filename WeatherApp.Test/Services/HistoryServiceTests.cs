@@ -21,7 +21,7 @@ namespace WeatherApp.Test.Services
             // Arrange
             IKernel kernel = new StandardKernel(new ServicesNinjectModule());
             IHistoryService historyService = kernel.Get<IHistoryService>();
-            ICurrentWeather input = new CurrentDayForecast()
+            ICurrentWeather input = new CurrentWeather()
             {
                 City = new City()
                 {
@@ -49,7 +49,7 @@ namespace WeatherApp.Test.Services
             ForecastQueryInfo expected = new ForecastQueryInfo()
             {
                 City = input.City,
-                Forecasts = new List<Forecast>() { new Forecast(input) }
+                Forecasts = new List<StoredForecast>() { new StoredForecast(input) }
             };
 
             // Act
@@ -58,8 +58,8 @@ namespace WeatherApp.Test.Services
             ForecastQueryInfo obj = historyService.GetEntryById(id);
 
             // Assert
-            Forecast actualForecast = obj.Forecasts[0];
-            Forecast expectedForecast = expected.Forecasts[0];
+            StoredForecast actualForecast = obj.Forecasts[0];
+            StoredForecast expectedForecast = expected.Forecasts[0];
 
             Assert.AreEqual(expectedForecast.WeatherState, actualForecast.WeatherState);
             Assert.AreEqual(expectedForecast.WeatherIcon, actualForecast.WeatherIcon);

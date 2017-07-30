@@ -4,11 +4,8 @@ using Domain.Entities.Concretic;
 
 namespace Domain.Entities.Abstraction
 {
-    public interface ICurrentWeather : IBaseForecast
+    public interface ICurrentWeather : ISingleForecast
     {
-        double? CurrentTemperature { get; set; }
-        DateTime Sunrise { get; set; }
-        DateTime Sunset { get; set; }
         City City { get; set; }
     }
 }

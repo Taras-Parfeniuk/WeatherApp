@@ -33,7 +33,7 @@ namespace Web.ApiControllers
             return response;
         }
 
-        [Route("/default")]
+        [Route("default")]
         [HttpGet]
         public HttpResponseMessage GetDefault()
         {

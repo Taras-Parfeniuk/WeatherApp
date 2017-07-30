@@ -27,7 +27,7 @@ namespace Services.Concretic
                     throw new Exception();
             }
 
-            return new CurrentDayForecast()
+            return new CurrentWeather()
             {
                 City = new City()
                 {
@@ -45,8 +45,8 @@ namespace Services.Concretic
                 MaxTemperature = (double?)jObject["main"]["temp_max"],
                 CurrentTemperature = (double?)jObject["main"]["temp"],
                 
-                Sunrise = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunrise"]),
-                Sunset = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunset"]),
+                Sunrise = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunrise"]),
+                Sunset = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["sys"]["sunset"]),
 
                 WeatherIcon = (string)jObject["weather"][0]["icon"],
                 WeatherState = (string)jObject["weather"][0]["main"],
@@ -57,7 +57,7 @@ namespace Services.Concretic
             };
         }
 
-        public IMediumForecast ToMediumForecast(string json)
+        public IMultipleForecast ToMediumForecast(string json)
         {
             var jObject = JObject.Parse(json);
             var statusCode = (int)jObject["cod"];
@@ -72,7 +72,7 @@ namespace Services.Concretic
                     throw new Exception();
             }
 
-            var forecast = new FiveDaysForecast()
+            var forecast = new MultipleForecast()
             {
                 City = new City
                 {
@@ -80,18 +80,18 @@ namespace Services.Concretic
                     Name = (string)jObject["city"]["name"],
                     Country = (string)jObject["city"]["country"],
                 },
-                HourForecasts = new List<IBaseForecast>()
+                SingleForecasts = new List<ISingleForecast>()
             };
 
             for (var i = 0; i < (int)jObject["cnt"]; i++)
             {
-                forecast.HourForecasts.Add(ToBaseForecast((JObject)jObject["list"][i]));
+                forecast.SingleForecasts.Add(ToHourlyForecast((JObject)jObject["list"][i]));
             }
 
             return forecast;
         }
 
-        public ILongForecast ToLongForecast(string json)
+        public IMultipleForecast ToLongForecast(string json)
         {
             var jObject = JObject.Parse(json);
             var statusCode = (int)jObject["cod"];
@@ -106,7 +106,7 @@ namespace Services.Concretic
                     throw new Exception();
             }
 
-            var forecast = new SixteenDaysForecast()
+            var forecast = new MultipleForecast()
             {
                 City = new City
                 {
@@ -114,19 +114,19 @@ namespace Services.Concretic
                     Name = (string)jObject["city"]["name"],
                     Country = (string)jObject["city"]["country"],
                 },
-                DayForecasts = new List<IDayForecast>()
+                SingleForecasts = new List<ISingleForecast>()
             };
             for (var i = 0; i < (int)jObject["cnt"]; i++)
             {
-                forecast.DayForecasts.Add(ToDayForecast((JObject)jObject["list"][i]));
+                forecast.SingleForecasts.Add(ToDayForecast((JObject)jObject["list"][i]));
             }
 
             return forecast;
         }
 
-        public IBaseForecast ToBaseForecast(JObject jObject)
+        public ISingleForecast ToHourlyForecast(JObject jObject)
         {
-            return new BaseForecast
+            return new SingleForecast
             {
                 DefaultPressure = (int?)jObject["main"]["pressure"],
                 Humidity = (int?)jObject["main"]["humidity"],
@@ -140,25 +140,25 @@ namespace Services.Concretic
                 WeatherState = (string)jObject["weather"][0]["main"],
                 WeatherDescription = (string)jObject["weather"][0]["description"],
 
-                ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"])
+                ForecastTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"])
             };
         }
 
-        public IBaseForecast ToBaseForecast(string json)
+        public ISingleForecast ToHourlyForecast(string json)
         {
             var jObject = JObject.Parse(json);
 
-            return ToBaseForecast(jObject);
+            return ToHourlyForecast(jObject);
         }
 
-        public IDayForecast ToDayForecast(JObject jObject)
+        public ISingleForecast ToDayForecast(JObject jObject)
         {
-            return new DayForecast()
+            return new SingleForecast()
             {
                 Humidity = (int?)jObject["humidity"],
                 DefaultPressure = (int?)jObject["pressure"],
                 Cloudiness = (double?)jObject["clouds"],
-                ForecastTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
+                ForecastTime = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds((double)jObject["dt"]),
                 WindSpeed = (double?)jObject["speed"],
 
                 WeatherIcon = (string)jObject["weather"][0]["icon"],
@@ -173,7 +173,7 @@ namespace Services.Concretic
             };
         }
 
-        public IDayForecast ToDayForecast(string json)
+        public ISingleForecast ToDayForecast(string json)
         {
             var jObject = JObject.Parse(json);
 

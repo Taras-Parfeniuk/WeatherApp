@@ -28,7 +28,7 @@ namespace WeatherApp.Test.Services
 + "\"id\":1851632,"
 + "\"name\":\"Shuzenji\","
 + "\"cod\":200}";
-            ICurrentWeather expected = new CurrentDayForecast()
+            ICurrentWeather expected = new CurrentWeather()
             {
                 City = new City()
                 {
@@ -212,7 +212,7 @@ namespace WeatherApp.Test.Services
                 "\"clouds\":0," +
                 "\"snow\":0.01}";
 
-            IDayForecast expected = new DayForecast()
+            ISingleForecast expected = new SingleForecast()
             {
                 DayTemperature = 262.65,
                 MinTemperature = 261.41,
@@ -231,7 +231,7 @@ namespace WeatherApp.Test.Services
             };
 
             // Act
-            IDayForecast obj = converter.ToDayForecast(json);
+            ISingleForecast obj = converter.ToDayForecast(json);
 
             // Assert
             Assert.AreEqual(expected.WeatherState, obj.WeatherState);
@@ -284,7 +284,7 @@ namespace WeatherApp.Test.Services
                 + json_second_list_item
                 + "]}";
 
-            ILongForecast expected = new SixteenDaysForecast()
+            IMultipleForecast expected = new SixteenDaysForecast()
             {
                 City = new City()
                 {
@@ -293,11 +293,11 @@ namespace WeatherApp.Test.Services
                     Country = "RU"
                 },
 
-                DayForecasts = new List<IDayForecast>() { converter.ToDayForecast(json_first_list_item), converter.ToDayForecast(json_second_list_item) }
+                DayForecasts = new List<ISingleForecast>() { converter.ToDayForecast(json_first_list_item), converter.ToDayForecast(json_second_list_item) }
             };
 
             // Act
-            ILongForecast obj = converter.ToLongForecast(json);
+            IMultipleForecast obj = converter.ToLongForecast(json);
 
             // Assert
             Assert.Multiple(() =>
