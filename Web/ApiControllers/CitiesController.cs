@@ -42,13 +42,24 @@ namespace Web.ApiControllers
             return response;
         }
 
+        [Route("")]
+        [HttpGet]
+        public HttpResponseMessage GetByName([FromUri]string cityName)
+        {
+            var result = _citiesService.GetCityByName(cityName);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound, $"City with name: {cityName} not found.");
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         [Route("{cityId}")]
         [HttpGet]
         public HttpResponseMessage GetById(int cityId)
         {
                 var result = _citiesService.GetSelected().FirstOrDefault(c => c.Id == cityId);
             if (result == null)
-                return Request.CreateResponse(HttpStatusCode.OK, $"City with id: {cityId} not found in selected list.");
+                return Request.CreateResponse(HttpStatusCode.NotFound, $"City with id: {cityId} not found in selected list.");
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 

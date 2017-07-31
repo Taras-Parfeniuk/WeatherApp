@@ -27,6 +27,15 @@ namespace Web.ApiControllers
             return response;
         }
 
+        [Route("")]
+        [HttpGet]
+        public HttpResponseMessage GetHistoryByCity([FromUri]string cityName)
+        {
+            var result = _historyService.GetHistoryByCity(cityName);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
+            return response;
+        }
+
         private readonly IHistoryService _historyService;
     }
 }

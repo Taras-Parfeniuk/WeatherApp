@@ -1,19 +1,37 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
-using UWP.Services.Abstraction;
+using Uwp.Models.DTO;
+using Uwp.Services;
 
-namespace UWP.Models
+namespace Uwp.Models
 {
     public class DefaultCities
     {
+        public event DefaultCitiesLoadedEventHandler DefaultCitiesLoaded;
+
+        private static DefaultCities _instance;
+
+        private DefaultCities()
+        {
+            _citiesService = new CitiesService();
+            Cities = new List<City>();
+        }
+
+        public static DefaultCities GetInstance()
+        {
+            if (_instance == null)
+                _instance = new DefaultCities();
+            return _instance;
+        }
+
         public List<City> Cities { get; set; }
 
-        public DefaultCities(ICitiesService service)
+        public async Task<City> GetByNameAsync(string cityName)
         {
-            _citiesService = service;
-            Cities = new List<City>();
-            LoadCities();
+            return await _citiesService.GetByNameAsync(cityName);
         }
 
         public async void LoadCities()
@@ -24,8 +42,13 @@ namespace UWP.Models
             {
                 Cities.Add(city);
             }
+
+            DefaultCitiesLoaded(this, new DefaultCitiesLoadedEventArgs());
         }
 
-        private ICitiesService _citiesService;
+        private CitiesService _citiesService;
     }
+
+    public class DefaultCitiesLoadedEventArgs : EventArgs { }
+    public delegate void DefaultCitiesLoadedEventHandler(object sender, DefaultCitiesLoadedEventArgs e);
 }

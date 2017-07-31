@@ -4,17 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using UWP.Services.Abstraction;
+using Uwp.Models.DTO;
+using Uwp.Services;
 
-namespace UWP.Models
+namespace Uwp.Models
 {
     public class History
     {
         public List<HistoryEntry> Entries { get; set; }
 
-        public History(IHistoryService service)
+        public event HistoryEntriesLoadedEventHandler HistoryEntriesLoaded;
+
+        public History()
         {
-            _historyService = service;
+            _historyService = new HistoryService();
             Entries = new List<HistoryEntry>();
             LoadEntries();
         }
@@ -27,8 +30,23 @@ namespace UWP.Models
             {
                 Entries.Add(entry);
             }
+            HistoryEntriesLoaded(this, new HistoryEntriesLoadedEventArgs());
         }
 
-        private IHistoryService _historyService;
+        public async void LoadEntriesByCity(string city)
+        {
+            var entries = await _historyService.GetHistoryByCityAsync(city);
+
+            foreach (var entry in entries)
+            {
+                Entries.Add(entry);
+            }
+            HistoryEntriesLoaded(this, new HistoryEntriesLoadedEventArgs());
+        }
+
+        private HistoryService _historyService;
     }
+
+    public class HistoryEntriesLoadedEventArgs : EventArgs { }
+    public delegate void HistoryEntriesLoadedEventHandler(object sender, HistoryEntriesLoadedEventArgs e);
 }
