@@ -100,7 +100,7 @@
     <Compile Include="Models\DefaultCities.cs" />
     <Compile Include="Models\DTO\City.cs" />
     <Compile Include="Models\DTO\CurrentWeather.cs" />
-    <Compile Include="Models\DTO\HistoryEntry.cs" />
+    <Compile Include="Models\HistoryEntry.cs" />
     <Compile Include="Models\DTO\MultipleForecast.cs" />
     <Compile Include="Models\DTO\SingleForecast.cs" />
     <Compile Include="Models\Forecasts.cs" />

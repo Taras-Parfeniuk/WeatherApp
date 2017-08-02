@@ -13,16 +13,13 @@ namespace Uwp.Models
     {
         public List<HistoryEntry> Entries { get; set; }
 
-        public event HistoryEntriesLoadedEventHandler HistoryEntriesLoaded;
-
         public History()
         {
             _historyService = new HistoryService();
             Entries = new List<HistoryEntry>();
-            LoadEntries();
         }
 
-        public async void LoadEntries()
+        public async Task LoadEntries()
         {
             var entries = await _historyService.GetHistoryAsync();
 
@@ -30,10 +27,9 @@ namespace Uwp.Models
             {
                 Entries.Add(entry);
             }
-            HistoryEntriesLoaded(this, new HistoryEntriesLoadedEventArgs());
         }
 
-        public async void LoadEntriesByCity(string city)
+        public async Task LoadEntriesByCity(string city)
         {
             var entries = await _historyService.GetHistoryByCityAsync(city);
 
@@ -41,12 +37,8 @@ namespace Uwp.Models
             {
                 Entries.Add(entry);
             }
-            HistoryEntriesLoaded(this, new HistoryEntriesLoadedEventArgs());
         }
 
         private HistoryService _historyService;
     }
-
-    public class HistoryEntriesLoadedEventArgs : EventArgs { }
-    public delegate void HistoryEntriesLoadedEventHandler(object sender, HistoryEntriesLoadedEventArgs e);
 }

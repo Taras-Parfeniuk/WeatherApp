@@ -54,16 +54,18 @@ namespace Uwp.ViewModels
             _selectedCities = new SelectedCities();
             Title = "Selected cities";
             Cities = new ObservableCollection<City>();
+
             RemoveCommand = new RelayCommand(RemoveSelected);
             ForecastForSelectedCommand = new RelayCommand(ForecastForSelected);
             AddToSelectedCommand = new RelayCommand(AddToSelected);
 
-            _selectedCities.SelectedCitiesLoaded += UpdateCities;
+            LoadCities();
         }
 
-        private void AddToSelected()
+        private async void AddToSelected()
         {
-            _selectedCities.Add(_newCityName);
+            await _selectedCities.Add(_newCityName);
+            LoadCities();
         }
 
         private void ForecastForSelected()
@@ -76,18 +78,21 @@ namespace Uwp.ViewModels
             }
         }
 
-        private void RemoveSelected()
+        private async void RemoveSelected()
         {
             if (_selectedCity != null)
             {
-                _selectedCities.Remove(_selectedCity);
+                await _selectedCities.Remove(_selectedCity);
                 _selectedCity = null;
+                LoadCities();
             }
         }
 
-        private void UpdateCities(object sender, SelectedCitiesLoadedEventArgs e)
+        private async void LoadCities()
         {
+            await _selectedCities.LoadCities();
             Cities.Clear();
+
             foreach (var city in _selectedCities.Cities)
             {
                 Cities.Add(city);

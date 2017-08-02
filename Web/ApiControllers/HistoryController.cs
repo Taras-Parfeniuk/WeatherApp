@@ -31,7 +31,7 @@ namespace Web.ApiControllers
 
         [Route("{queryId}")]
         [HttpGet]
-        public HttpResponseMessage GetHistoryByCity(Guid queryId)
+        public HttpResponseMessage GetEntryById(Guid queryId)
         {
             var result = _historyService.GetEntryById(queryId);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);

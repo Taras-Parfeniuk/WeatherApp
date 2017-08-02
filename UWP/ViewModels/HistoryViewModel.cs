@@ -26,6 +26,7 @@ namespace Uwp.ViewModels
                 if (_selectedEntry != null)
                 {
                     MessengerInstance.Send(_selectedEntry);
+                    _selectedEntry = null;
                     _navigationService.NavigateTo(nameof(HistoryEntryViewModel));
                 }
 
@@ -39,11 +40,12 @@ namespace Uwp.ViewModels
             Title = "History";
             Entries = new ObservableCollection<HistoryEntry>();
 
-            _history.HistoryEntriesLoaded += UpdateEntries;
+            LoadEntries();
         }
         
-        private void UpdateEntries(object sender, HistoryEntriesLoadedEventArgs e)
+        private async void LoadEntries()
         {
+            await _history.LoadEntries();
             Entries.Clear();
 
             foreach (var entry in _history.Entries)

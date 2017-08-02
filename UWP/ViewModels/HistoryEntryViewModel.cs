@@ -29,13 +29,20 @@ namespace Uwp.ViewModels
             {
                 _entry = entry;
                 _title = $"{_entry.City.Name}, {_entry.City.Country} ({_entry.QueryTime.ToString()})";
-                foreach (var f in _entry.Forecasts)
-                {
-                    Forecasts.Add(f);
-                }
                 RaisePropertyChanged(() => Title);
 
+                LoadForecasts();
             });
+        }
+
+        private async void LoadForecasts()
+        {
+            await _entry.LoadForecasts();
+
+            foreach (var f in _entry.Forecasts)
+            {
+                Forecasts.Add(f);
+            }
         }
 
         private void GoBack()

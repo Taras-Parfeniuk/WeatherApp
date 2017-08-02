@@ -14,16 +14,13 @@ namespace Uwp.Models
     {
         public List<City> Cities { get; set; }
 
-        public event SelectedCitiesLoadedEventHandler SelectedCitiesLoaded;
-
         public SelectedCities()
         {
             _citiesService = new CitiesService();
             Cities = new List<City>();
-            LoadCities();
         }
 
-        public async void LoadCities()
+        public async Task LoadCities()
         {
             if (Cities.Count > 0)
             {
@@ -36,42 +33,28 @@ namespace Uwp.Models
             {
                 Cities.Add(city);
             }
-
-            SelectedCitiesLoaded(this, new SelectedCitiesLoadedEventArgs());
         }
 
-        public async void Add(City city)
+        public async Task Add(City city)
         {
-            if (await _citiesService.AddToSelectedAsync(city))
-            {
-                LoadCities();
-            }
+            await _citiesService.AddToSelectedAsync(city);
         }
 
-        public async void Add(string cityName)
+        public async Task Add(string cityName)
         {
             var city = await _citiesService.GetByNameAsync(cityName);
 
-            if (await _citiesService.AddToSelectedAsync(city))
-            {
-                LoadCities();
-            }
+            await _citiesService.AddToSelectedAsync(city);
         }
 
-        public async void Remove(City city)
+        public async Task Remove(City city)
         {
-            if (await _citiesService.RemoveFromSelectedAsync(city.Id))
-            {
-                LoadCities();
-            }
+            await _citiesService.RemoveFromSelectedAsync(city.Id);
         }
 
-        public async void RemoveById(int id)
+        public async Task RemoveById(int id)
         {
-            if (await _citiesService.RemoveFromSelectedAsync(id))
-            {
-                LoadCities();
-            }
+            await _citiesService.RemoveFromSelectedAsync(id);
         }
 
         public async Task<City> GetByNameAsync(string cityName)
@@ -86,7 +69,4 @@ namespace Uwp.Models
 
         private CitiesService _citiesService;
     }
-
-    public class SelectedCitiesLoadedEventArgs : EventArgs { }
-    public delegate void SelectedCitiesLoadedEventHandler(object sender, SelectedCitiesLoadedEventArgs e);
 }
