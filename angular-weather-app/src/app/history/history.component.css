@@ -1,0 +1,9 @@
+.history-entry:hover {
+		color: #000;
+		background: #59b5f2;
+}
+
+.history-entry {
+	display: flex;
+	justify-content: space-between;
+}

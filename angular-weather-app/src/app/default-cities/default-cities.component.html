@@ -1,0 +1,5 @@
+<div class="default-cities-list">
+	<a *ngFor="let city of defaultCities"  [routerLink]="['/current', city.Name]">
+		{{city.Name}}
+	</a>
+</div>

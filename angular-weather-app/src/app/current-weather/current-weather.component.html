@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="city-title">
+		<h3>{{currentWeather.City.Name}}, {{currentWeather.City.Country}}</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="panel-body forecast-toggle">
+    <a [routerLink]="['/current', currentWeather.City.Name]">Weather</a>
+    <a [routerLink]="['/hourly', currentWeather.City.Name]">Hourly</a>
+    <a [routerLink]="['/daily', currentWeather.City.Name]">Daily</a>
+	</div>
+</div>
+<div class="row">
+	<div class="panel">
+		<div class="panel-header">
+			{{currentWeather.ForecastTime | date: 'EEEE, MMMM d'}}
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="weather-icon">
+					<img src="/assets/img/icon/{{currentWeather.WeatherIcon}}.svg" />
+					<h4>{{currentWeather.WeatherDescription}}</h4>
+				</div>
+				<div class="weather-description">
+					<h3>{{currentWeather.WeatherState}}, {{currentWeather.MinTemperature}} C- {{currentWeather.MaxTemperature}} C</h3>
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="weather-icon">
+					<img src="/assets/img/icon/icon-1.svg" />
+				</div>
+				<div class="weather-description">
+					<h3>Sunrise at {{currentWeather.Sunrise | date: 'jm'}}</h3>
+					<h3>Sunset at {{currentWeather.Sunset | date: 'jm'}}</h3>
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="weather-icon">
+					<img src="/assets/img/icon/icon-7.svg" />
+				</div>
+				<div class="weather-description">
+					<h3>Wind Speed: {{currentWeather.WindSpeed}} m/s</h3>
+					<h3>Humidity: {{currentWeather.Humidity}}</h3>
+					<h3>Pressure: {{currentWeather.DefaultPressure}}</h3>
+				</div>
+			</div>
+			<hr />
+		</div>
+	</div>
+</div>

@@ -13,6 +13,8 @@ namespace Web
             json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
+            config.EnableCors();
+
             config.MapHttpAttributeRoutes();
         }
     }

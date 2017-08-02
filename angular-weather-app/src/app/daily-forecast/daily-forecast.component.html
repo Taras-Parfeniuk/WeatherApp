@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="city-title">
+    <h3>{{forecast.City.Name}}, {{forecast.City.Country}}</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="panel-body forecast-toggle">
+    <a [routerLink]="['/current', forecast.City.Name]">Weather</a>
+    <a [routerLink]="['/hourly', forecast.City.Name]">Hourly</a>
+    <a [routerLink]="['/daily', forecast.City.Name]">Daily</a>
+  </div>
+</div>
+<div *ngFor="let d of forecast.SingleForecasts" class="row">
+  <div class="panel">
+    <div class="panel-header">
+      {{d.ForecastTime | date: date: 'EEEE, MMMM d'}}
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="weather-icon">
+          <img src="/assets/img/icon/{{d.WeatherIcon}}.svg" />
+          <h3>{{d.WeatherDescription}}</h3>
+        </div>
+        <div>
+          <h3>Morning temperature</h3>
+          <p>{{d.MorningTemperature}} C</p>
+        </div>
+        <div>
+          <h3>Day temperature</h3>
+          <p>{{d.DayTemperature}} C</p>
+        </div>
+        <div>
+          <h3>Evening temperature</h3>
+          <p>{{d.EveningTemperature}} C</p>
+        </div>
+        <div>
+          <h3>Wind:</h3>
+          <p>{{d.WindSpeed}} m/s</p>
+        </div>
+        <div>
+          <h3>Humidity:</h3>
+          <p>{{d.Humidity}}</p>
+        </div>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>

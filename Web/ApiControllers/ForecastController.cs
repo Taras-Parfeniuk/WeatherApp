@@ -5,14 +5,17 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Web.Http.Cors;
 
 using Newtonsoft.Json;
 
 using Services.Abstraction;
 using Domain.Entities.Abstraction;
+using Domain.Entities.Concretic;
 
 namespace Web.ApiControllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/forecast")]
     public class ForecastController : ApiController
     {
@@ -44,6 +47,23 @@ namespace Web.ApiControllers
             try
             {
                 var result = _weatherService.MediumForecast(city);
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, ex);
+            }
+        }
+
+        [Route("hourly")]
+        [HttpGet]
+        public HttpResponseMessage GetHourlyByCity([FromUri]string city, [FromUri]bool sorted)
+        {
+            try
+            {
+                var result = new SortedMultipleForecast(_weatherService.MediumForecast(city));
+
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
                 return response;
             }

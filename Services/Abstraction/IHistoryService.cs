@@ -13,6 +13,6 @@ namespace Services.Abstraction
         List<ForecastQueryInfo> GetHistory();
         List<ForecastQueryInfo> GetHistoryByCity(string cityName);
         List<ForecastQueryInfo> GetHistoryByCity(City city);
-        ForecastQueryInfo GetEntryById(Guid id);
+        QueryForecast GetEntryById(Guid id);
     }
 }

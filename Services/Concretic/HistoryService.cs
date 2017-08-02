@@ -68,18 +68,25 @@ namespace Services.Concretic
             {
                 Id = entry.Id,
                 City = _citiesService.GetCityById(entry.CityId),
-                Forecasts = entry.Forecasts,
                 QueryTime = entry.Time
             };
             return info;
         }
 
-        public ForecastQueryInfo GetEntryById(Guid id)
+        public QueryForecast GetEntryById(Guid id)
         {
-            return EntryToForecastQueryInfo(_historyRepository.GetById(id));
+            var entry = _historyRepository.GetById(id);
+
+            var forecast = new QueryForecast()
+            {
+                City = _citiesService.GetCityById(entry.CityId),
+                QueryTime = entry.Time,
+                Forecasts = entry.Forecasts
+            };
+
+            return forecast;
         }
 
-        private IKernel _kernel;
         private ICitiesService _citiesService;
         private IHistoryRepository _historyRepository;
     }

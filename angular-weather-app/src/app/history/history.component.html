@@ -1,0 +1,22 @@
+<div class="row">
+		<div class="city-filter">
+			<input #cityNameFilter type="text" class="form-control" placeholder="Filter: city name">
+			<button (click)="loadHistoryByCity(cityNameFilter.value)" class="btn">Show</button>
+		</div>
+</div>
+
+<div class="row">
+	<div class="panel">
+		<div class="panel-body history-panel">
+				<div *ngFor="let entry of history" (click)="goToEntry(entry.Id)" class="row history-entry">
+					<div>
+						<h4>{{entry.QueryTime | date: 'medium'}}</h4>
+					</div>
+					<div>
+						<h4>{{entry.City.Name}}, {{entry.City.Country}}</h4>
+					</div>
+				</div>
+				<hr />
+		</div>
+	</div>
+</div>

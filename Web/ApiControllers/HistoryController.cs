@@ -4,12 +4,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Threading.Tasks;
+using System.Web.Http.Cors;
 
 using Services.Abstraction;
-using System.Threading.Tasks;
 
 namespace Web.ApiControllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/history")]
     public class HistoryController : ApiController
     {
@@ -23,6 +25,15 @@ namespace Web.ApiControllers
         public HttpResponseMessage GetHistory()
         {
             var result = _historyService.GetHistory();
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
+            return response;
+        }
+
+        [Route("{queryId}")]
+        [HttpGet]
+        public HttpResponseMessage GetHistoryByCity(Guid queryId)
+        {
+            var result = _historyService.GetEntryById(queryId);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
             return response;
         }

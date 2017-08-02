@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 
 using Newtonsoft.Json;
 
@@ -16,6 +17,7 @@ using Services.Exceptions;
 
 namespace Web.ApiControllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/cities")]
     public class CitiesController : ApiController
     {
@@ -73,7 +75,7 @@ namespace Web.ApiControllers
             try
             {
                 _citiesService.AddToSelected(_citiesService.GetCityById(city.Id));
-                return new HttpResponseMessage(HttpStatusCode.Created);
+                return Request.CreateResponse(HttpStatusCode.Created, city);
             }
             catch (CityNotFoundException ex)
             {
@@ -109,7 +111,7 @@ namespace Web.ApiControllers
             try
             {
                 _citiesService.UpdateInSelected(_citiesService.GetCityById(city.Id));
-                return new HttpResponseMessage(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (ItemNotExistException ex)
             {

@@ -1,0 +1,36 @@
+
+<div class="row">
+	<div class="city-title">
+		<h3>Selected cities</h3>
+	</div>
+</div>
+
+<div class="row">
+		<div class="panel-body cities-panel">
+			<div *ngFor="let c of selectedCities" class="row">
+				<div>
+					<h3>{{c.Id}}</h3>
+        </div>
+        <div>
+					<h3>{{c.Name}}</h3>
+				</div>
+				<div>
+					<h3>{{c.Country}}</h3>
+				</div>
+				<div>
+          <button (click)="removeFromSelected(c.Id)" class="btn">Remove</button>
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+					<div class="row">
+						<div>
+							<input #newCityName type="text" class="form-control" placeholder="City name">
+						</div>
+						<div>
+							<button class="btn" (click)="addToSelected(newCityName.value)">Add</button>
+						</div>
+					</div>
+			</div>
+		</div>
+</div>

@@ -65,8 +65,10 @@
     <Compile Include="Entities\Concretic\ForecastQueryInfo.cs" />
     <Compile Include="Entities\Concretic\HistoryEntry.cs" />
     <Compile Include="Entities\Concretic\MultipleForecast.cs" />
+    <Compile Include="Entities\Concretic\QueryForecast.cs" />
     <Compile Include="Entities\Concretic\SingleForecast.cs" />
     <Compile Include="Entities\Concretic\City.cs" />
+    <Compile Include="Entities\Concretic\SortedMultipleForecast.cs" />
     <Compile Include="Entities\Concretic\StoredForecast.cs" />
     <Compile Include="Exceptions\ItemAlreadyExistException.cs" />
     <Compile Include="Exceptions\ItemNotExistException.cs" />
