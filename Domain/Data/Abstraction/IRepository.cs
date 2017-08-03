@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Domain.Data.Abstraction
 {
@@ -10,5 +11,12 @@ namespace Domain.Data.Abstraction
         void AddOrUpdate(TEntity entity);
 
         List<TEntity> GetAll();
+
+        Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task RemoveAsync(TEntity entity);
+        Task AddOrUpdateAsync(TEntity entity);
+
+        Task<List<TEntity>> GetAllAsync();
     }
 }

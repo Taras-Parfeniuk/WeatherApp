@@ -80,5 +80,68 @@ namespace Domain.Data.Concretic.EF
             }
             _context.SaveChanges();
         }
+
+        public async Task RemoveAsync(int id)
+        {
+            var item = await Items.FirstOrDefaultAsync(c => c.Id == id);
+            if (item != null)
+            {
+                await RemoveAsync(item);
+            }
+            else
+            {
+                throw new ItemNotExistException($"City with id: {id} not exist in selected");
+            }
+        }
+
+        public override async Task RemoveAsync(City entity)
+        {
+            var item = await Items.FirstOrDefaultAsync(c => c.Id == entity.Id);
+            if (item != null)
+            {
+                Items.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new ItemNotExistException($"City with id: {entity.Id} not exist in selected");
+            }
+        }
+
+        public override async Task UpdateAsync(City entity)
+        {
+            var item = await Items.FirstOrDefaultAsync(e => e.Id == entity.Id);
+
+            if (item == null)
+            {
+                throw new ItemNotExistException($"City with id: {entity.Id} not found");
+            }
+            else
+            {
+                item.Country = entity.Country;
+                item.Name = entity.Name;
+
+                _context.Entry(item).State = EntityState.Modified;
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public override async Task AddOrUpdateAsync(City entity)
+        {
+            var item = await Items.FirstOrDefaultAsync(e => e.Id == entity.Id);
+
+            if (item == null)
+            {
+                Items.Add(entity);
+            }
+            else
+            {
+                item.Country = entity.Country;
+                item.Name = entity.Name;
+
+                _context.Entry(item).State = EntityState.Modified;
+            }
+            await _context.SaveChangesAsync();
+        }
     }
 }

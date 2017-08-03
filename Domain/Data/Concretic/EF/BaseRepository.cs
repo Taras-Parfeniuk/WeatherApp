@@ -32,7 +32,7 @@ namespace Domain.Data.Concretic.EF
             try
             {
                 Items.Remove(entity);
-            _context.SaveChanges();
+                _context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -45,6 +45,47 @@ namespace Domain.Data.Concretic.EF
         public virtual List<TEntity> GetAll()
         {
             return Items.ToList();
+        }
+
+        public virtual async Task AddAsync(TEntity entity)
+        {
+            try
+            {
+                Items.Add(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ItemAlreadyExistException("Item already exist", ex);
+            }
+        }
+
+        public virtual async Task UpdateAsync(TEntity entity)
+        {
+            
+        }
+
+        public virtual async Task RemoveAsync(TEntity entity)
+        {
+            try
+            {
+                Items.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ItemNotExistException("Item already exist", ex);
+            }
+        }
+
+        public virtual async Task AddOrUpdateAsync(TEntity entity)
+        {
+
+        }
+
+        public virtual async Task<List<TEntity>> GetAllAsync()
+        {
+            return await Items.ToListAsync();
         }
 
         protected readonly WeatherDbContext _context = new WeatherDbContext();

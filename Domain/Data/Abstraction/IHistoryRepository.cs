@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using Domain.Entities.Concretic;
+using System.Threading.Tasks;
 
 namespace Domain.Data.Abstraction
 {
@@ -9,5 +10,8 @@ namespace Domain.Data.Abstraction
     {
         IEnumerable<HistoryEntry> GetByCityId(int id);
         HistoryEntry GetById(Guid id);
+
+        Task<IEnumerable<HistoryEntry>> GetByCityIdAsync(int id);
+        Task<HistoryEntry> GetByIdAsync(Guid id);
     }
 }

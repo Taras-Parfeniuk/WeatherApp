@@ -9,6 +9,7 @@ using Domain.Entities.Concretic;
 using Domain.Data.Abstraction;
 using Services.Abstraction;
 using Services.Util;
+using System.Threading.Tasks;
 
 namespace Services.Concretic
 {
@@ -85,6 +86,66 @@ namespace Services.Concretic
             };
 
             return forecast;
+        }
+
+        public async Task<Guid> AddToHistoryAsync(IMultipleForecast forecast)
+        {
+            HistoryEntry entry = new HistoryEntry()
+            {
+                Id = Guid.NewGuid(),
+                CityId = forecast.City.Id,
+                Forecasts = new List<StoredForecast>(forecast.SingleForecasts.Select(f => new StoredForecast(f))),
+                Time = DateTime.Now
+            };
+
+            await _historyRepository.AddOrUpdateAsync(entry);
+            return entry.Id;
+        }
+
+        public async Task<Guid> AddToHistoryAsync(ICurrentWeather forecast)
+        {
+            HistoryEntry entry = new HistoryEntry()
+            {
+                Id = Guid.NewGuid(),
+                CityId = forecast.City.Id,
+                Forecasts = new List<StoredForecast>() { new StoredForecast(forecast) },
+                Time = DateTime.Now
+            };
+            await _historyRepository.AddOrUpdateAsync(entry);
+            return entry.Id;
+        }
+
+        public async Task<List<ForecastQueryInfo>> GetHistoryAsync()
+        {
+            var entries = await _historyRepository.GetAllAsync();
+
+            return entries.Select(e => EntryToForecastQueryInfo(e)).ToList();
+        }
+
+        public async Task<List<ForecastQueryInfo>> GetHistoryByCityAsync(string cityName)
+        {
+            var city = await _citiesService.GetCityByNameAsync(cityName);
+
+            return await GetHistoryByCityAsync(city);
+        }
+
+        public async Task<List<ForecastQueryInfo>> GetHistoryByCityAsync(City city)
+        {
+            var entries = await _historyRepository.GetByCityIdAsync(city.Id);
+
+            return entries.Select(e => EntryToForecastQueryInfo(e)).ToList();
+        }
+
+        public async Task<QueryForecast> GetEntryByIdAsync(Guid id)
+        {
+            var entry = await _historyRepository.GetByIdAsync(id);
+            var city = await _citiesService.GetCityByIdAsync(entry.CityId);
+            return new QueryForecast()
+            {
+                City = city,
+                QueryTime = entry.Time,
+                Forecasts = entry.Forecasts
+            };
         }
 
         private ICitiesService _citiesService;

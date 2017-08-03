@@ -22,27 +22,27 @@ namespace Web.ApiControllers
 
         [Route("")]
         [HttpGet]
-        public HttpResponseMessage GetHistory()
+        public async Task<HttpResponseMessage> GetHistory()
         {
-            var result = _historyService.GetHistory();
+            var result = await _historyService.GetHistoryAsync();
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
             return response;
         }
 
         [Route("{queryId}")]
         [HttpGet]
-        public HttpResponseMessage GetEntryById(Guid queryId)
+        public async Task<HttpResponseMessage> GetEntryById(Guid queryId)
         {
-            var result = _historyService.GetEntryById(queryId);
+            var result = await _historyService.GetEntryByIdAsync(queryId);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
             return response;
         }
 
         [Route("")]
         [HttpGet]
-        public HttpResponseMessage GetHistoryByCity([FromUri]string cityName)
+        public async Task<HttpResponseMessage> GetHistoryByCity([FromUri]string cityName)
         {
-            var result = _historyService.GetHistoryByCity(cityName);
+            var result = await _historyService.GetHistoryByCityAsync(cityName);
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, result);
             return response;
         }
